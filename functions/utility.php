@@ -79,7 +79,7 @@ class utility
 			'base',
 			'blade',
 			'css',
-			'doccoment',
+			'doccomment',
 			'gdscript',
 			'javascript',
 			'json',
@@ -90,9 +90,9 @@ class utility
 			'yaml',
 		);
 // Make no highlighting as text as default
-		if (!in_array($default, $this->geshi_list))
+		if ($default)
 		{
-			$default = 'text';
+
 		}
 
 		$output = '';

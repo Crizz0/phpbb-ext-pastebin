@@ -67,9 +67,6 @@ class main
 	protected $captcha_factory;
 
 	/** @var string */
-	protected $geshi_lang;
-
-	/** @var string */
 	protected $pastebin_table;
 
 	/**
@@ -105,7 +102,6 @@ class main
 		\phpbbde\pastebin\functions\pastebin $pastebin,
 		$root_path,
 		$php_ext,
-		$geshi_lang,
 		$pastebin_table)
 	{
 		$this->auth = $auth;
@@ -125,7 +121,6 @@ class main
 		$this->captcha_factory = $captcha_factory;
 
 		$this->pastebin_table = $pastebin_table;
-		$this->geshi_lang = $geshi_lang;
 	}
 
 	public function handle()
@@ -294,10 +289,10 @@ class main
 					$error[] = $this->language->lang('PASTEBIN_ERR_NO_TITLE');
 				}
 
-				if (!$this->util->geshi_check($data['snippet_highlight']))
+				/*if (!$this->util->geshi_check($data['snippet_highlight']))
 				{
 					$data['snippet_highlight'] = 'text';
-				}
+				}*/
 
 				$filedata = $this->request->file('fileupload');
 
@@ -415,20 +410,14 @@ class main
 
 					$highlight = ($this->request->is_set('highlight')) ? $this->request->variable('highlight', '') : $data['snippet_highlight'];
 
-					if (!$this->util->geshi_check($highlight))
-					{
-						$highlight = 'php';
-					}
-
 					$code = $snippet_text;
 
-					$geshi = new \GeSHi($code, $highlight, $this->util->geshi_dir);
-					$geshi->set_header_type(GESHI_HEADER_NONE);
-					$geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS, 100);
-
-					$code = $geshi->parse_code();
+                    $highlighter = new \Tempest\Highlight\Highlighter();
+                    // TODO: Add option to change language used at this point html,css etc. 
+                    $code = $highlighter->parse($code, 'php');
 
 					$snippet_text_display = &$code;
+
 
 					$s_hidden_fields = array_merge($s_hidden_fields, array(
 							's'		=> $snippet_id,

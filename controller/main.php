@@ -413,7 +413,7 @@ class main
 					$code = $snippet_text;
 
                     $highlighter = new \Tempest\Highlight\Highlighter();
-                    // TODO: Add option to change language used at this point html,css etc. 
+                    // TODO: Add option to change language used at this point html,css etc.
                     $code = $highlighter->parse($code, 'php');
 
 					$snippet_text_display = &$code;

@@ -1,5 +1,0 @@
-!/vendor
-/vendor/*
-!/vendor/easybook
-!/vendor/autoload.php
-!/vendor/composer

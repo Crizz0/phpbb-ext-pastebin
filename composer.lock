@@ -4,53 +4,60 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8236cc236df96c40468e64f8c915e0ff",
+    "content-hash": "95b91d76fd9a7c67e412f74d4718aed5",
     "packages": [
         {
-            "name": "easybook/geshi",
-            "version": "v1.0.8.19",
+            "name": "tempest/highlight",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/easybook/geshi.git",
-                "reference": "b4df5fa84a44d4e12eff67263a701eac7e157241"
+                "url": "https://github.com/tempestphp/highlight.git",
+                "reference": "f7938f4378e0371aa2034feb967cb5e02ff1ef52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/easybook/geshi/zipball/b4df5fa84a44d4e12eff67263a701eac7e157241",
-                "reference": "b4df5fa84a44d4e12eff67263a701eac7e157241",
+                "url": "https://api.github.com/repos/tempestphp/highlight/zipball/f7938f4378e0371aa2034feb967cb5e02ff1ef52",
+                "reference": "f7938f4378e0371aa2034feb967cb5e02ff1ef52",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.0"
+                "php": "^8.3"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.21",
+                "larapack/dd": "^1.1",
+                "league/commonmark": "^2.4",
+                "phpstan/phpstan": "^1.10.0",
+                "phpunit/phpunit": "^10.0"
             },
             "type": "library",
             "autoload": {
-                "classmap": [
-                    "./"
-                ]
+                "psr-4": {
+                    "Tempest\\Highlight\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "Nigel McNie",
-                    "email": "nigel@geshi.org"
-                },
-                {
-                    "name": "Benny Baumann",
-                    "email": "BenBE@geshi.org"
+                    "name": "Brent Roose",
+                    "email": "brendt@stitcher.io"
                 }
             ],
-            "description": "GeSHi - Generic Syntax Highlighter. This is an unmodified port of GeSHi project code found on SourceForge.",
-            "homepage": "http://qbnz.com/highlighter",
-            "keywords": [
-                "highlight",
-                "highlighter",
-                "syntax"
+            "description": "Fast, extensible, server-side code highlighting",
+            "support": {
+                "issues": "https://github.com/tempestphp/highlight/issues",
+                "source": "https://github.com/tempestphp/highlight/tree/1.2.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/brendt",
+                    "type": "github"
+                }
             ],
-            "time": "2018-04-20T18:19:44+00:00"
+            "time": "2024-04-02T11:41:48+00:00"
         }
     ],
     "packages-dev": [
@@ -1395,11 +1402,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.7, <=7.4"
+        "php": ">=8.3"
     },
     "platform-dev": [],
-    "platform-overrides": {
-        "php": "5.6"
-    },
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.6.0"
 }

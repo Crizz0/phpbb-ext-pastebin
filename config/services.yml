@@ -1,5 +1,7 @@
 parameters:
     phpbbde.pastebin.path: '%core.root_path%ext/phpbbde/pastebin/'
+    phpbbde.pastebin.highlight: '%phpbbde.pastebin.path%vendor/tempest/highlight/'
+    phpbbde.pastebin.hightlightlangs: '%phpbbde.pastebin.highlight%src/Languages/'
     phpbbde.pastebin.cron.prune_interval: 86400
     tables.phpbbde.pastebin.pastebin: '%core.table_prefix%pastebin'
 services:
@@ -8,6 +10,7 @@ services:
         arguments:
             - '%core.php_ext%'
             - '@language'
+            - '%phpbbde.pastebin.hightlightlangs%'
     phpbbde.pastebin.functions.pastebin:
         class: phpbbde\pastebin\functions\pastebin
         arguments:

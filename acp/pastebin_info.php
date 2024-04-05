@@ -23,6 +23,11 @@ class pastebin_info
 					'auth' => 'ext_phpbbde/pastebin && acl_a_board',
 					'cat' => array('ACP_PASTEBIN_TITLE')
 				),
+				'pastebin_languages'	=> array(
+					'title' => 'ACP_PASTEBIN_LANGUAGES',
+					'auth' => 'ext_phpbbde/pastebin && acl_a_board',
+					'cat' => array('ACP_PASTEBIN_TITLE')
+				),
 			),
 		);
 	}

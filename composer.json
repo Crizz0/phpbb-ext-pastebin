@@ -21,11 +21,10 @@
 		}
 	],
 	"require": {
-		"php": ">=8.3",
-		"tempest/highlight": "^1.2"
+		"php": "^8.4"
 	},
 	"require-dev": {
-		"phpbb/epv": "0.0.11"
+		"tempest/highlight": "^2.22.0"
 	},
 	"extra": {
 		"display-name": "Pastebin",

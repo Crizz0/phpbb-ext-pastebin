@@ -1,14 +1,14 @@
 parameters:
     phpbbde.pastebin.path: '%core.root_path%ext/phpbbde/pastebin/'
-    phpbbde.pastebin.geshi: '%phpbbde.pastebin.path%vendor/easybook/geshi/'
-    phpbbde.pastebin.geshilangs: '%phpbbde.pastebin.geshi%geshi/'
+    phpbbde.pastebin.highlight: '%phpbbde.pastebin.path%assets/tempest/highlight/'
+    phpbbde.pastebin.hightlightlangs: '%phpbbde.pastebin.highlight%src/Languages/'
     phpbbde.pastebin.cron.prune_interval: 86400
     tables.phpbbde.pastebin.pastebin: '%core.table_prefix%pastebin'
 services:
     phpbbde.pastebin.functions.utility:
         class: phpbbde\pastebin\functions\utility
         arguments:
-            - '%phpbbde.pastebin.geshilangs%'
+            - '%phpbbde.pastebin.hightlightlangs%'
             - '%core.php_ext%'
             - '@language'
     phpbbde.pastebin.functions.pastebin:
@@ -35,7 +35,6 @@ services:
             - '@phpbbde.pastebin.functions.pastebin'
             - '%core.root_path%'
             - '%core.php_ext%'
-            - '%phpbbde.pastebin.geshilangs%'
             - '%tables.phpbbde.pastebin.pastebin%'
     phpbbde.pastebin.base_listener:
         class: phpbbde\pastebin\event\base_events

@@ -7,7 +7,7 @@
 */
 
 namespace phpbbde\pastebin\functions;
-
+// TODO: this won't be needed any longer
 class utility
 {
 	/**

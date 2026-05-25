@@ -408,7 +408,7 @@ class main
 					$snippet_text = $data['snippet_text'];
 
 					$highlight = ($this->request->is_set('highlight')) ? $this->request->variable('highlight', '') : $data['snippet_highlight'];
-/* TODO
+                    /* TODO
 					if (!$this->util->geshi_check($highlight))
 					{
 						$highlight = 'php';
@@ -419,7 +419,7 @@ class main
                     $highlighter = new \Tempest\Highlight\Highlighter();
                     // TODO: Add option to change language used at this point html,css etc.
                     // Get the input from the database, which gets feed from user input
-                    $code = $highlighter->parse($code, 'php');
+                    $code = $highlighter->parse($code, $highlight);
 
 					$snippet_text_display = &$code;
 

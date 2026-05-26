@@ -33,6 +33,23 @@ if (empty($lang) || !is_array($lang))
 // ’ « » “ ” … „ “
 
 $lang = array_merge($lang, [
-    'PASTEBIN_NAV_TITLE'        => 'Pastebin',
-    'PASTEBIN_NAV_CONFIG'       => 'Pastebin Einstellungen',
+    'PASTEBIN_NAV_TITLE'        	=> 'Pastebin',
+    'PASTEBIN_NAV_CONFIG'       	=> 'Pastebin Einstellungen',
+
+	'PASTEBIN_CONFIG'       					=> 'Pastebin Einstellungen',
+    'PASTEBIN_CONFIG_EXPLAIN'  					=> 'Hier können Einstellungen für die Extension <em>Pastebin</em> vorgenommen werden. Eingestellt werden kann, ob geheime Snippets erstellt werden können, welche Dateiendungen	beim Hochladen zu gelassen sind und wie die Standardeinstellung für die Speicherdauer derSnippets sind. Zudem kann eingerichtet werden, welche Sprachen unterstützt werden.',
+
+	'PASTEBIN_MAIN_SETTINGS'					=> 'Pastebin - Einstellungen',
+	'PASTEBIN_MAIN_SETTINGS_EXPLAIN'			=> 'Richte die Hauptfunktionen der Extension <em>Pastebin</em> ein.',
+
+	'PASTEBIN_ALLOW_SECRET_SNIPPETS'			=> 'Erlaube geheime Snippets',
+	'PASTEBIN_ALLOW_SECRET_SNIPPETS_EXPLAIN'	=> 'Sofern aktiviert, können Benutzer auch geheime Snippets erstellen, die nur diejenigen
+													anzeigen können, die den Link zum Snippet können.',
+
+	'PASTEBIN_DEFAULT_PRUNE_MONTHS'					=> 'Standard-Speicherdauer der Snippets',
+	'PASTEBIN_DEFAULT_PRUNE_MONTHS_EXPLAIN'			=> 'Hiermit wird eingestellt, was bei der Speicherdauer beim Erstellen von Snippets vorausgewählt ist.',
+	'PASTEBIN_MONTHS'								=> 'Monate',
+
+	'PASTEBIN_ALLOWED_FILE_EXTENSIONS'				=> 'Erlaubte Dateiendungen',
+	'PASTEBIN_ALLOWED_FILE_EXTENSIONS_EXPLAIN'		=> 'Für das Hochladen der Dateien sind nur die folgenden Dateiendungen erlaubt.',
 ]);

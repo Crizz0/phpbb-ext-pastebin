@@ -25,7 +25,7 @@ class v300 extends \phpbb\db\migration\migration
         return [
             'add_columns' => [
                 $this->table_prefix . 'pastebin' => [
-                    'snippet_private'   => ['BOOL', 0],
+                    'snippet_secret'   => ['BOOL', 0],
                     'snippet_hash'      => ['VCHAR:64', ''],
                 ]
             ],
@@ -59,7 +59,9 @@ class v300 extends \phpbb\db\migration\migration
                     'modes' => ['settings'],
                 ]
             ]],
-            // Update version
+            ['config.add', ['pastebin_allow_secret_snippets', 1]],
+            ['config.add', ['pastebin_default_prune_months', 1]],
+			// Update version
             ['config.update', ['pastebin_version', '3.0.0']],
         ];
     }

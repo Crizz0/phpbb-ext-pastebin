@@ -1,9 +1,11 @@
 parameters:
     phpbbde.pastebin.path: '%core.root_path%ext/phpbbde/pastebin/'
     phpbbde.pastebin.highlight: '%phpbbde.pastebin.path%assets/tempest/highlight/'
-    phpbbde.pastebin.hightlightlangs: '%phpbbde.pastebin.highlight%src/Languages/'
     phpbbde.pastebin.cron.prune_interval: 86400
-    tables.phpbbde.pastebin.pastebin: '%core.table_prefix%pastebin'
+
+imports:
+    - { resource: tables.yml }
+
 services:
     phpbbde.pastebin.functions.utility:
         class: phpbbde\pastebin\functions\utility
@@ -36,6 +38,24 @@ services:
             - '%core.root_path%'
             - '%core.php_ext%'
             - '%tables.phpbbde.pastebin.pastebin%'
+    phpbbde.pastebin.settings.acp:
+        class: phpbbde\pastebin\controller\acp_pastebin_settings
+        arguments:
+            - '@auth'
+            - '@config'
+            - '@dbal.conn'
+            - '@language'
+            - '@request'
+            - '@template'
+    phpbbde.pastebin.languages.acp:
+        class: phpbbde\pastebin\controller\acp_pastebin_languages
+        arguments:
+            - '@auth'
+            - '@config'
+            - '@request'
+            - '@dbal.conn'
+            - '@template'
+            - '%phpbbde.pastebin.tables.pastebin_langs'
     phpbbde.pastebin.base_listener:
         class: phpbbde\pastebin\event\base_events
         arguments:

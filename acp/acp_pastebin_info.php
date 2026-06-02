@@ -16,9 +16,14 @@ class acp_pastebin_info
             'modes'     => [
                 'settings' => [
                     'title'     => 'PASTEBIN_NAV_CONFIG',
-                    'auth'      => 'ext_phpbbde/pastebin && acl_a_board',
+                    'auth'      => 'ext_phpbbde/pastebin && a_pastebin',
                     'cat'       => ['ACP_PASTEBIN_TITLE']
                 ],
+				'languages' => [
+					'title'     => 'PASTEBIN_NAV_LANGS',
+					'auth'      => 'ext_phpbbde/pastebin && a_pastebin',
+					'cat'       => ['ACP_PASTEBIN_TITLE']
+				],
             ],
         ];
     }

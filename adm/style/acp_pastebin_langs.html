@@ -1,0 +1,15 @@
+{% include 'overall_header.html' %}
+
+<a id="maincontent"></a>
+
+<h1>{{ lang('PASTEBIN_LANG_CONFIG') }}</h1>
+
+<p>{{ lang('PASTEBIN_LANG_CONFIG_EXPLAIN') }}</p>
+
+{% for item in loops.loopname %}
+markup, {{ item.xyyyy }}, etc.
+{% else %}
+alternate markup
+{% endfor %}
+
+{% include 'overall_footer.html' %}

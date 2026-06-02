@@ -34,10 +34,11 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, [
     'PASTEBIN_NAV_TITLE'        	=> 'Pastebin',
-    'PASTEBIN_NAV_CONFIG'       	=> 'Pastebin Einstellungen',
+    'PASTEBIN_NAV_CONFIG'       	=> 'Pastebin - Einstellungen',
+    'PASTEBIN_NAV_LANGS'	       	=> 'Pastebin - Sprachen',
 
 	'PASTEBIN_CONFIG'       					=> 'Pastebin Einstellungen',
-    'PASTEBIN_CONFIG_EXPLAIN'  					=> 'Hier können Einstellungen für die Extension <em>Pastebin</em> vorgenommen werden. Eingestellt werden kann, ob geheime Snippets erstellt werden können, welche Dateiendungen	beim Hochladen zu gelassen sind und wie die Standardeinstellung für die Speicherdauer derSnippets sind. Zudem kann eingerichtet werden, welche Sprachen unterstützt werden.',
+    'PASTEBIN_CONFIG_EXPLAIN'  					=> 'Hier können Einstellungen für die Extension <em>Pastebin</em> vorgenommen werden. Eingestellt werden kann, ob geheime Snippets erstellt werden können, welche Dateiendungen	beim Hochladen zu gelassen sind und wie die Standardeinstellung für die Speicherdauer der Snippets sind.',
 
 	'PASTEBIN_MAIN_SETTINGS'					=> 'Pastebin - Einstellungen',
 	'PASTEBIN_MAIN_SETTINGS_EXPLAIN'			=> 'Richte die Hauptfunktionen der Extension <em>Pastebin</em> ein.',
@@ -52,4 +53,14 @@ $lang = array_merge($lang, [
 
 	'PASTEBIN_ALLOWED_FILE_EXTENSIONS'				=> 'Erlaubte Dateiendungen',
 	'PASTEBIN_ALLOWED_FILE_EXTENSIONS_EXPLAIN'		=> 'Für das Hochladen der Dateien sind nur die folgenden Dateiendungen erlaubt.',
+
+	// ACP
+	'PASTEBIN_SETTINGS'								=> 'Pastebin-Einstellungen',
+	'PASTEBIN_UPDATED'								=> 'Die Einstellungen der Pastebin wurden aktualisiert.',
+
+	// Lang-Keys for the Pastebin-Lang-ACP-page
+	'PASTEBIN_LANG_CONFIG'       					=> 'Pastebin - Sprachen',
+	'PASTEBIN_LANG_CONFIG_EXPLAIN'  				=> 'Hier kann eingerichtet werden, welche Sprachen aktiviert und durch den Highlighter nutzbar sind.',
+
+
 ]);

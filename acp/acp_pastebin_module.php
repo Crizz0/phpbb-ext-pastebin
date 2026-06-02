@@ -12,14 +12,31 @@ class acp_pastebin_module
     public $tpl_name;
     public $u_action;
 
-    public function main()
+    public function main($id, $mode)
     {
-        $language = $phpbb_container->get('language');
-        $this->tpl_name = 'acp_pastebin_settings';
-        $this->page_title = $language->lang('PASTEBIN_NAV_TITLE') . ' - ' . $language->lang('PASTEBIN_NAV_CONFIG');
+        global $phpbb_container;
 
-        $acp_controller = $phpbb_container->get('phpbbde.pastebin.controller.acp');
-        $acp_controller->set_page_url($this->u_action);
-        $acp_controller->module_settings();
+		$language = $phpbb_container->get('language');
+
+		switch($mode)
+		{
+			// Settings
+			case 'settings':
+				$this->tpl_name = 'acp_pastebin_settings';
+				$this->page_title = $language->lang('PASTEBIN_NAV_TITLE') . ' - ' . $language->lang('PASTEBIN_NAV_CONFIG');
+
+				$acp_controller = $phpbb_container->get('phpbbde.pastebin.settings.acp');
+
+			break;
+			// Langs overview
+			case 'languages':
+				$this->tpl_name = 'acp_pastebin_langs';
+				$this->page_title = $language->lang('PASTEBIN_NAV_TITLE') . ' - ' . $language->lang('PASTEBIN_NAV_LANGUAGES');
+
+				$acp_controller = $phpbb_container->get('phpbbde.pastebin.languages.acp');
+			break;
+		}
+		$acp_controller->set_page_url($this->u_action);
+		$acp_controller->module_settings();
     }
 }

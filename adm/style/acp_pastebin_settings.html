@@ -18,14 +18,9 @@
                 <label><input type="radio" class="radio" name="pastebin_allow_secret_snippets" value="0" {% if not PASTEBIN_ALLOWED_SECRET %} checked {% endif %}> {{ lang('NO') }}</label>
             </dd>
         </dl>
-
         <dl>
             <dt><label for="pastebin_default_prune_months">{{ lang('PASTEBIN_DEFAULT_PRUNE_MONTHS')}}{{ lang('COLON') }}</label><br><span>{{ lang('PASTEBIN_DEFAULT_PRUNE_MONTHS_EXPLAIN')}}</span></dt>
             <dd><input id="pastebin_default_prune_months" type="number" min="1" max="9999" name="pastebin_default_prune_months" value="{{ PASTEBIN_DEFAULT_PRUNE_MONTHS_VALUE }}"> {{ lang('PASTEBIN_PRUNE_MONTHS') }}</dd>
-        </dl>
-        <dl>
-            <dt><label for="pastebin_allowed_file_exts">{{ lang('PASTEBIN_ALLOWED_FILE_EXTENSIONS')}}{{ lang('COLON') }}</label><br><span>{{ lang('PASTEBIN_ALLOWED_FILE_EXTENSIONS_EXPLAIN')}}</span></dt>
-            <dd><input id="pastebin_allowed_file_exts" type="text" maxlength="255" name="pastebin_allowed_file_exts" value="{{ PASTEBIN_ALLOWED_FILE_EXTS_VALUES }}"></dd>
         </dl>
     </fieldset>
 

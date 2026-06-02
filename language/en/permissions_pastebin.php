@@ -37,7 +37,7 @@ $lang = array_merge($lang, array(
 	// Category
 	'ACL_CAT_PASTEBIN' => 'Pastebin',
 
-	// User perms
+	// User permissions
 	'ACL_U_PASTEBIN_VIEW'			=> 'Can view pastebin entries',
 	'ACL_U_PASTEBIN_POST'			=> 'Can post pastebin entries',
 	'ACL_U_PASTEBIN_POST_NOVC'		=> 'Can post pastebin entries without visual confirmation',
@@ -45,8 +45,11 @@ $lang = array_merge($lang, array(
 	'ACL_U_PASTEBIN_EDIT'			=> 'Can edit own pastebin entries (Storage duration, Syntax highlighting, Source code)',
 	'ACL_U_PASTEBIN_DELETE'			=> 'Can delete own pastebin entries',
 
-	// Moderator perms
+	// Moderator permissions
 	'ACL_M_PASTEBIN_EDIT'			=> 'Can edit pastebin entries (Storage duration, Syntax highlighting, Source code)',
 	'ACL_M_PASTEBIN_DELETE'			=> 'Can delete pastebin entries',
 	'ACL_M_PASTEBIN_POST_NOTLIM'	=> 'Can deactivate pruning of selected pastebin entries',
+
+	// Admin permissions
+	'ACL_A_PASTEBIN'				=> 'Can manage Pastebin',
 ));

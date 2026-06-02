@@ -62,5 +62,11 @@ $lang = array_merge($lang, [
 	'PASTEBIN_LANG_CONFIG'       					=> 'Pastebin - Sprachen',
 	'PASTEBIN_LANG_CONFIG_EXPLAIN'  				=> 'Hier kann eingerichtet werden, welche Sprachen aktiviert und durch den Highlighter nutzbar sind.',
 
+	// Table header - languages overview page
+	'PASTEBIN_TABLE_LANG_ID' 			=> 'Sprach-ID',
+	'PASTEBIN_TABLE_LANG_NAME' 			=> 'Name',
+	'PASTEBIN_TABLE_LANG_NAME_CLEAN' 	=> 'Name (clean)',
+	'PASTEBIN_TABLE_FILE_EXTENSIONS' 	=> 'Dateiendungen',
+	'PASTEBIN_TABLE_LANG_ACTIVE' 		=> 'Sprache aktiv',
 
 ]);

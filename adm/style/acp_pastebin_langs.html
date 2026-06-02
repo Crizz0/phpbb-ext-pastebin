@@ -6,10 +6,32 @@
 
 <p>{{ lang('PASTEBIN_LANG_CONFIG_EXPLAIN') }}</p>
 
-{% for item in loops.loopname %}
-markup, {{ item.xyyyy }}, etc.
-{% else %}
-alternate markup
-{% endfor %}
+<table class="table1 zebra-table">
+    <thead>
+        <tr>
+            <th>{{ lang('PASTEBIN_TABLE_LANG_ID') }}</th>
+            <th>{{ lang('PASTEBIN_TABLE_LANG_NAME') }}</th>
+            <th>{{ lang('PASTEBIN_TABLE_LANG_NAME_CLEAN') }}</th>
+            <th>{{ lang('PASTEBIN_TABLE_FILE_EXTENSIONS') }}</th>
+            <th>{{ lang('PASTEBIN_TABLE_LANG_ACTIVE') }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for item in loops.langlist %}
+        {% if loop.index is even %}
+            <tr class="row1">
+        {% else %}
+            <tr class="row2">
+        {% endif %}
+            <td>{{ item.LANG_ID }}</td>
+            <td>{{ item.LANG_NAME }}</td>
+            <td>{{ item.LANG_NAME_CLEAN }}</td>
+            <td>{{ item.LANG_FILE_EXTENSION }}</td>
+            <td>{{ item.LANG_ACTIVE }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
 
 {% include 'overall_footer.html' %}

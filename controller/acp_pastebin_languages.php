@@ -21,8 +21,8 @@ class acp_pastebin_languages
 	}
 	public function module_settings(): void
 	{
-		$sql = 'SELECT lang_id, lang_name, lang_name_clean, Lang_active, lang_file_extension FROM ' . $this->pastebin_lang_tables . "
-					ORDER BY lang_id ASC";
+		$sql = 'SELECT lang_id, lang_name, lang_name_clean, lang_active, lang_file_extension FROM ' . $this->pastebin_lang_tables .
+				" ORDER BY lang_name_clean ASC";
 
 		$result = $this->db->sql_query($sql);
 
@@ -30,17 +30,13 @@ class acp_pastebin_languages
 
 		while ($rows = $this->db->sql_fetchrow($result))
 		{
-			$template->assign_block_vars('loopname', [
-				'FOO' => $row['foo'],
-				'BAR' => $row['bar']
+			$this->template->assign_block_vars('langlist', [
+				'LANG_ID' 				=> $rows['lang_id'],
+				'LANG_NAME' 			=> $rows['lang_name'],
+				'LANG_NAME_CLEAN' 		=> $rows['lang_name_clean'],
+				'LANG_ACTIVE'			=> $rows['lang_active'],
+				'LANG_FILE_EXTENSION' 	=> $rows['lang_file_extension'],
 			]);
 		};
-
-
-
-		$this->template->assign_vars([
-
-		]);
-
 	}
 }

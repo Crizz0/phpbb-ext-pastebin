@@ -10,15 +10,16 @@ services:
     phpbbde.pastebin.functions.utility:
         class: phpbbde\pastebin\functions\utility
         arguments:
-            - '%phpbbde.pastebin.hightlightlangs%'
             - '%core.php_ext%'
             - '@language'
+
     phpbbde.pastebin.functions.pastebin:
         class: phpbbde\pastebin\functions\pastebin
         arguments:
             - '@dbal.conn'
             - '@user'
-            - '%tables.phpbbde.pastebin.pastebin%'
+            - '%phpbbde.pastebin.tables.pastebin%'
+
     phpbbde.pastebin.controller.main:
         class: phpbbde\pastebin\controller\main
         arguments:
@@ -37,7 +38,8 @@ services:
             - '@phpbbde.pastebin.functions.pastebin'
             - '%core.root_path%'
             - '%core.php_ext%'
-            - '%tables.phpbbde.pastebin.pastebin%'
+            - '%phpbbde.pastebin.tables.pastebin%'
+
     phpbbde.pastebin.settings.acp:
         class: phpbbde\pastebin\controller\acp_pastebin_settings
         arguments:
@@ -47,6 +49,7 @@ services:
             - '@language'
             - '@request'
             - '@template'
+
     phpbbde.pastebin.languages.acp:
         class: phpbbde\pastebin\controller\acp_pastebin_languages
         arguments:
@@ -55,7 +58,7 @@ services:
             - '@request'
             - '@dbal.conn'
             - '@template'
-            - '%phpbbde.pastebin.tables.pastebin_langs'
+
     phpbbde.pastebin.base_listener:
         class: phpbbde\pastebin\event\base_events
         arguments:
@@ -71,14 +74,22 @@ services:
         class: phpbbde\pastebin\event\acp_events
         tags:
             - {name: event.listener}
+
     phpbbde.pastebin.cron.main:
         class: phpbbde\pastebin\cron\main
         arguments:
             - '@config'
             - '@dbal.conn'
             - '%phpbbde.pastebin.cron.prune_interval%'
-            - '%tables.phpbbde.pastebin.pastebin%'
+            - '%phpbbde.pastebin.tables.pastebin%'
         calls:
             - [set_name, [phpbbde.pastebin.cron.main]]
         tags:
             - {name: cron.task}
+
+    phpbbde.pastebin.listener:
+        class: phpbbde\pastebin\event\permission_listener
+        arguments:
+            - '@auth'
+        tags:
+            - { name: event.listener }

@@ -1,3 +1,2 @@
 parameters:
   phpbbde.pastebin.tables.pastebin: '%core.table_prefix%pastebin'
-  phpbbde.pastebin.tables.pastebin_langs: '%core.table_prefix%pastebin_langs'

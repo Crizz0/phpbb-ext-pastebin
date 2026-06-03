@@ -26,8 +26,6 @@ class acp_pastebin_languages
 
 		$result = $this->db->sql_query($sql);
 
-		$this->db->sql_freeresult($result);
-
 		while ($rows = $this->db->sql_fetchrow($result))
 		{
 			$this->template->assign_block_vars('langlist', [
@@ -38,5 +36,7 @@ class acp_pastebin_languages
 				'LANG_FILE_EXTENSION' 	=> $rows['lang_file_extension'],
 			]);
 		};
+
+		$this->db->sql_freeresult($result);
 	}
 }

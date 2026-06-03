@@ -18,11 +18,7 @@
     </thead>
     <tbody>
     {% for item in loops.langlist %}
-        {% if loop.index is even %}
-            <tr class="row1">
-        {% else %}
-            <tr class="row2">
-        {% endif %}
+        <tr>
             <td>{{ item.LANG_ID }}</td>
             <td>{{ item.LANG_NAME }}</td>
             <td>{{ item.LANG_NAME_CLEAN }}</td>
@@ -33,5 +29,13 @@
     </tbody>
 </table>
 
+<dl>
+    <dt><label for="allowed">{L_ALLOWED}{L_COLON}</label></dt>
+    <dd><input type="checkbox" class="radio" id="allowed" name="allow_group" value="1"<!-- IF ALLOW_GROUP --> checked="checked"<!-- ENDIF --> /></dd>
+</dl>
+
+<td class="centered-text"><input type="checkbox" class="radio" name="delete[{{ attachments.ATTACH_ID }}]" /></td>
+
+TODO: Add submit button, form drumherum, checkbox für LANG_ACTIVE und input feld für FILE_EXTENSION
 
 {% include 'overall_footer.html' %}

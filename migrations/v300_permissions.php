@@ -22,7 +22,7 @@ class v300_permissions extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		$data = [
-			['permission.add', [['a_pastebin', true]]],
+			['permission.add', ['a_pastebin', true]],
 		];
 
 		// Check if role exists and add the new permission

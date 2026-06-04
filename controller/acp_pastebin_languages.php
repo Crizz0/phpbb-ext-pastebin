@@ -21,8 +21,9 @@ class acp_pastebin_languages
 	}
 	public function module_settings(): void
 	{
-		$sql = 'SELECT lang_id, lang_name, lang_name_clean, lang_active, lang_file_extension FROM ' . $this->pastebin_lang_tables .
-				" ORDER BY lang_name_clean ASC";
+		$sql = 'SELECT lang_id, lang_name, lang_name_clean, lang_active, lang_file_extension FROM '
+			. $this->pastebin_lang_tables .
+			' ORDER BY lang_name_clean ASC';
 
 		$result = $this->db->sql_query($sql);
 
@@ -38,5 +39,10 @@ class acp_pastebin_languages
 		};
 
 		$this->db->sql_freeresult($result);
+	}
+
+	public function set_page_url(string $u_action): void
+	{
+		$this->u_action = $u_action;
 	}
 }

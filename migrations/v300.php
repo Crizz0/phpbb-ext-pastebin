@@ -58,20 +58,8 @@ class v300 extends \phpbb\db\migration\migration
 				'acp',
 				'ACP_PASTEBIN_TITLE',
 				[
-					'module_langname' => '',
 					'module_basename' => '\phpbbde\pastebin\acp\acp_pastebin_module',
-					'module_mode' => 'settings',
-					'module_auth' => 'ext_phpbbde/pastebin && a_pastebin',
-				],
-			]],
-			['module.add', [
-				'acp',
-				'ACP_PASTEBIN_TITLE',
-				[
-					'module_langname' => '',
-					'module_basename' => '\phpbbde\pastebin\acp\acp_pastebin_module',
-					'module_mode' => 'languages',
-					'module_auth' => 'ext_phpbbde/pastebin && a_pastebin',
+					'modes' => ['settings', 'languages'],
 				],
 			]],
 			['config.add', ['pastebin_allow_secret_snippets', 1]],

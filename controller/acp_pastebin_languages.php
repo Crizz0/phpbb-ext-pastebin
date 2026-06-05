@@ -52,14 +52,17 @@ class acp_pastebin_languages
 				$error = $this->language->lang('FORM_INVALID');
 			}
 
-			$sql = 'SELECT lang_id FROM ' . $this->pastebin_lang_tables;
-
-			$result = $this->db->sql_query($sql);
-			$rows = $this->db->sql_fetchrowset($result);
-			$rows = array_column($rows, 'lang_id');
-
 			if (empty($error) && $this->request->is_set_post('submit'))
 			{
+				// Select the lang_ids from the database and reconfigure the array
+				$sql = 'SELECT lang_id FROM ' . $this->pastebin_lang_tables;
+
+				$result = $this->db->sql_query($sql);
+				$rows = $this->db->sql_fetchrowset($result);
+				$rows = array_column($rows, 'lang_id');
+
+				$this->db->sql_freeresult($result);
+
 				// Grab checked checkboxes
 				$activated_lang = $this->request->variable('lang_active', ['']);
 				// Get not checked checkboxes via array diff
@@ -81,8 +84,6 @@ class acp_pastebin_languages
 		$this->template->assign_vars(array(
 			'U_ACTION' => $this->u_action,
 		));
-
-		$this->db->sql_freeresult($result);
 	}
 
 	public function set_page_url(string $u_action): void
@@ -93,7 +94,7 @@ class acp_pastebin_languages
 	private function change_lang_settings($lang_id, $lang_active): void
 	{
 		$sql = 'UPDATE ' . $this->pastebin_lang_tables . '
-			SET lang_active=' . $lang_active. '
+			SET lang_active=' . $lang_active . '
 			WHERE lang_id = ' . (int) $lang_id;
 
 		$result = $this->db->sql_query($sql);

@@ -7,14 +7,12 @@
 /**
  * DO NOT CHANGE
  */
-if (!defined('IN_PHPBB'))
-{
-    exit;
+if (!defined('IN_PHPBB')) {
+	exit;
 }
 
-if (empty($lang) || !is_array($lang))
-{
-    $lang = [];
+if (empty($lang) || !is_array($lang)) {
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -33,6 +31,36 @@ if (empty($lang) || !is_array($lang))
 // ’ « » “ ” … „ “
 
 $lang = array_merge($lang, [
-    'PASTEBIN_NAV_TITLE'        => 'Pastebin',
-    'PASTEBIN_NAV_CONFIG'       => 'Pastebin settings',
+// ACP
+	'PASTEBIN_NAV_TITLE' 	=> 'Pastebin',
+	'PASTEBIN_NAV_CONFIG' 	=> 'Pastebin - Settings',
+	'PASTEBIN_NAV_LANGS' 	=> 'Pastebin - Languages',
+
+	'PASTEBIN_CONFIG' 			=> 'Pastebin - Settings',
+	'PASTEBIN_CONFIG_EXPLAIN' 	=> 'On this page the settings for the <em>Pastebin</em> extensions can be done. 
+									Set up includes, if user can use secret snippets and the default value for store duration of the snippets.',
+
+	'PASTEBIN_MAIN_SETTINGS' 			=> 'Pastebin - Settings',
+	'PASTEBIN_MAIN_SETTINGS_EXPLAIN' 	=> 'Set up the main functions for the <em>Pastebin</em> extension.',
+
+	'PASTEBIN_ALLOW_SECRET_SNIPPETS' 			=> 'Allow secret snippets',
+	'PASTEBIN_ALLOW_SECRET_SNIPPETS_EXPLAIN' 	=> 'If activated, the users can create secret snippets, which can only be read by those people who know the URL.',
+
+	'PASTEBIN_DEFAULT_PRUNE_MONTHS' 			=> 'Default store duration',
+	'PASTEBIN_DEFAULT_PRUNE_MONTHS_EXPLAIN' 	=> 'With this value the default store duration for the snippets is defined. The users can change the value to the presets.',
+	'PASTEBIN_MONTHS' 							=> 'Months',
+
+	'PASTEBIN_SETTINGS' 	=> 'Pastebin settings',
+	'PASTEBIN_UPDATED' 		=> 'The Pastebin settings have been updated.',
+
+	// Lang-Keys for the Pastebin-Lang-ACP-page
+	'PASTEBIN_LANG_CONFIG' 			=> 'Pastebin - Languages',
+	'PASTEBIN_LANG_CONFIG_EXPLAIN' 	=> 'On this page can be setup, which languages can be used by the Highlighter.',
+
+	// Table header - languages overview page
+	'PASTEBIN_TABLE_LANG_ID' 			=> 'Language-ID',
+	'PASTEBIN_TABLE_LANG_NAME' 			=> 'Name',
+	'PASTEBIN_TABLE_LANG_NAME_CLEAN' 	=> 'Name (clean)',
+	'PASTEBIN_TABLE_FILE_EXTENSIONS'	=> 'File extensions',
+	'PASTEBIN_TABLE_LANG_ACTIVE' 		=> 'Active languages',
 ]);

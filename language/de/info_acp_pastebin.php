@@ -1,21 +1,19 @@
 <?php
 
-/**
- *
- */
+	/**
+	 *
+	 */
 
-/**
- * DO NOT CHANGE
- */
-if (!defined('IN_PHPBB'))
-{
-    exit;
-}
+	/**
+	 * DO NOT CHANGE
+	 */
+	if (!defined('IN_PHPBB')) {
+		exit;
+	}
 
-if (empty($lang) || !is_array($lang))
-{
-    $lang = [];
-}
+	if (empty($lang) || !is_array($lang)) {
+		$lang = [];
+	}
 
 // DEVELOPERS PLEASE NOTE
 //
@@ -32,41 +30,37 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ « » “ ” … „ “
 
-$lang = array_merge($lang, [
-    'PASTEBIN_NAV_TITLE'        	=> 'Pastebin',
-    'PASTEBIN_NAV_CONFIG'       	=> 'Pastebin - Einstellungen',
-    'PASTEBIN_NAV_LANGS'	       	=> 'Pastebin - Sprachen',
+	$lang = array_merge($lang, [
+// ACP
+	'PASTEBIN_NAV_TITLE' 	=> 'Pastebin',
+	'PASTEBIN_NAV_CONFIG' 	=> 'Pastebin - Einstellungen',
+	'PASTEBIN_NAV_LANGS' 	=> 'Pastebin - Sprachen',
 
-	'PASTEBIN_CONFIG'       					=> 'Pastebin Einstellungen',
-    'PASTEBIN_CONFIG_EXPLAIN'  					=> 'Hier können Einstellungen für die Extension <em>Pastebin</em> vorgenommen werden. Eingestellt werden kann, ob geheime Snippets erstellt werden können, welche Dateiendungen	beim Hochladen zu gelassen sind und wie die Standardeinstellung für die Speicherdauer der Snippets sind.',
+	'PASTEBIN_CONFIG' 			=> 'Pastebin Einstellungen',
+	'PASTEBIN_CONFIG_EXPLAIN' 	=> 'Hier können Einstellungen für die Extension <em>Pastebin</em> vorgenommen werden. Eingestellt werden kann, ob geheime Snippets erstellt werden können und was der Standardwert für die Speicherdauer der Snippets ist.',
 
-	'PASTEBIN_MAIN_SETTINGS'					=> 'Pastebin - Einstellungen',
-	'PASTEBIN_MAIN_SETTINGS_EXPLAIN'			=> 'Richte die Hauptfunktionen der Extension <em>Pastebin</em> ein.',
+	'PASTEBIN_MAIN_SETTINGS' 			=> 'Pastebin - Einstellungen',
+	'PASTEBIN_MAIN_SETTINGS_EXPLAIN' 	=> 'Richte die Hauptfunktionen der Extension <em>Pastebin</em> ein.',
 
-	'PASTEBIN_ALLOW_SECRET_SNIPPETS'			=> 'Erlaube geheime Snippets',
-	'PASTEBIN_ALLOW_SECRET_SNIPPETS_EXPLAIN'	=> 'Sofern aktiviert, können Benutzer auch geheime Snippets erstellen, die nur diejenigen
-													anzeigen können, die den Link zum Snippet können.',
+	'PASTEBIN_ALLOW_SECRET_SNIPPETS' 			=> 'Erlaube geheime Snippets',
+	'PASTEBIN_ALLOW_SECRET_SNIPPETS_EXPLAIN' 	=> 'Sofern aktiviert, können Benutzer auch geheime Snippets erstellen, die nur diejenigen
+												anzeigen können, die den Link zum Snippet kennen.',
 
-	'PASTEBIN_DEFAULT_PRUNE_MONTHS'					=> 'Standard-Speicherdauer der Snippets',
-	'PASTEBIN_DEFAULT_PRUNE_MONTHS_EXPLAIN'			=> 'Hiermit wird eingestellt, was bei der Speicherdauer beim Erstellen von Snippets vorausgewählt ist.',
-	'PASTEBIN_MONTHS'								=> 'Monate',
+	'PASTEBIN_DEFAULT_PRUNE_MONTHS' 			=> 'Standard-Speicherdauer',
+	'PASTEBIN_DEFAULT_PRUNE_MONTHS_EXPLAIN' 	=> 'Hiermit wird eingestellt, was bei der Speicherdauer beim Erstellen von Snippets vorausgewählt ist.',
+	'PASTEBIN_MONTHS' 							=> 'Monate',
 
-	'PASTEBIN_ALLOWED_FILE_EXTENSIONS'				=> 'Erlaubte Dateiendungen',
-	'PASTEBIN_ALLOWED_FILE_EXTENSIONS_EXPLAIN'		=> 'Für das Hochladen der Dateien sind nur die folgenden Dateiendungen erlaubt.',
-
-	// ACP
-	'PASTEBIN_SETTINGS'								=> 'Pastebin-Einstellungen',
-	'PASTEBIN_UPDATED'								=> 'Die Einstellungen der Pastebin wurden aktualisiert.',
+	'PASTEBIN_SETTINGS' 	=> 'Pastebin-Einstellungen',
+	'PASTEBIN_UPDATED' 		=> 'Die Einstellungen der Pastebin wurden aktualisiert.',
 
 	// Lang-Keys for the Pastebin-Lang-ACP-page
-	'PASTEBIN_LANG_CONFIG'       					=> 'Pastebin - Sprachen',
-	'PASTEBIN_LANG_CONFIG_EXPLAIN'  				=> 'Hier kann eingerichtet werden, welche Sprachen aktiviert und durch den Highlighter nutzbar sind.',
+	'PASTEBIN_LANG_CONFIG' 			=> 'Pastebin - Sprachen',
+	'PASTEBIN_LANG_CONFIG_EXPLAIN' 	=> 'Hier kann eingerichtet werden, welche Sprachen aktiviert und durch den Highlighter nutzbar sind.',
 
 	// Table header - languages overview page
 	'PASTEBIN_TABLE_LANG_ID' 			=> 'Sprach-ID',
 	'PASTEBIN_TABLE_LANG_NAME' 			=> 'Name',
 	'PASTEBIN_TABLE_LANG_NAME_CLEAN' 	=> 'Name (clean)',
-	'PASTEBIN_TABLE_FILE_EXTENSIONS' 	=> 'Dateiendungen',
-	'PASTEBIN_TABLE_LANG_ACTIVE' 		=> 'Sprache aktiv',
-
-]);
+	'PASTEBIN_TABLE_FILE_EXTENSIONS'	=> 'Dateiendungen',
+	'PASTEBIN_TABLE_LANG_ACTIVE' 		=> 'Aktive Sprachen',
+	]);

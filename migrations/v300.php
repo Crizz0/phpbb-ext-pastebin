@@ -64,8 +64,8 @@ class v300 extends \phpbb\db\migration\migration
 			]],
 			['config.add', ['pastebin_allow_secret_snippets', 1]],
 			['config.add', ['pastebin_default_prune_months', 1]],
-			// Update version
-			['config.update', ['pastebin_version', '3.0.0']],
+			// Remove version entry in database
+			['config.remove', ['pastebin_version']],
 		];
 	}
 

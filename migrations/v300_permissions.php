@@ -14,9 +14,9 @@ class v300_permissions extends \phpbb\db\migration\migration
 {
 	public static function depends_on()
 	{
-		return array(
+		return [
 			'\phpbbde\pastebin\migrations\v300',
-		);
+		];
 	}
 
 	public function update_data()

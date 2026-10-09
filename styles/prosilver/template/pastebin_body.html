@@ -30,11 +30,15 @@
 					<dt><label for="snippet_highlight">{{ lang('PASTEBIN_SNIPPET_HIGHLIGHT') }}{{ lang('COLON') }}</label></dt>
 					<dd><select id="snippet_highlight" name="snippet_highlight">{{ HIGHLIGHT_SELECT_MOD }}</select></dd>
 				</dl>
+				<dl>
+					<dt><label for="snippet_secret">{{ lang('PASTEBIN_SNIPPET_SECRET') }}{{ lang('COLON') }}</label></dt>
+					<dd><label for="snippet_secret"><input type="checkbox" name="snippet_secret" id="snippet_secret"> {{ lang('PASTEBIN_SNIPPET_SECRET_SHORT') }}</label></dd>
+				</dl>
 				{% endif %}
 				{% if S_AUTH_DELETE %}
 				<dl>
 					<dt><label for="delete_snippet">{{ lang('PASTEBIN_DELETE_SNIPPET') }}{{ lang('COLON') }}</label></dt>
-					<dd><label for="delete_snippet"><input type="checkbox" name="delete_snippet" id="delete_snippet" /> {{ lang('DELETE') }}</label></dd>
+					<dd><label for="delete_snippet"><input type="checkbox" name="delete_snippet" id="delete_snippet"> {{ lang('DELETE') }}</label></dd>
 				</dl>
 				{% endif %}
 			</fieldset>

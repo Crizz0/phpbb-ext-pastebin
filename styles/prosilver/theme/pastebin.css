@@ -53,6 +53,10 @@
 		font-size: 105%;
 		float: left;
 		width: 65%;
+
+		& h3 {
+			font-size: 16px;
+		}
 	}
 
 	& #extras {
@@ -60,6 +64,7 @@
 	}
 
 	& .mini-panel h3 {
+		font-size: 14px;
 		margin-top: 0;
 	}
 

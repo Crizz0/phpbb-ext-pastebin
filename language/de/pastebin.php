@@ -37,6 +37,8 @@ $lang = array_merge($lang, array(
 	'PASTEBIN_DELETE_SNIPPET_EXPLAIN'	=> 'Löscht den Eintrag aus der Datenbank. Diese Aktion kann nicht rückgängig gemacht werden.',
 	'PASTEBIN_DOWNLOAD_SNIPPET'			=> 'Eintrag herunterladen',
 	'PASTEBIN_DOWNLOAD_SNIPPET_EXPLAIN'	=> 'Alternativ kannst du den gesamten Eintrag auch als Datei %sherunterladen%s.',
+	'PASTEBIN_SNIPPET_SECRET'			=> 'Eintrag privat schalten',
+	'PASTEBIN_SNIPPET_SECRET_SHORT'		=> 'Privat',
 
 	'DISALLOWED_EXTENSION'	=> 'Die Dateierweiterung %s ist nicht erlaubt',
 

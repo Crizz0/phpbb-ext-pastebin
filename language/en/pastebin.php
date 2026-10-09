@@ -36,6 +36,8 @@ $lang = array_merge($lang, array(
 	'PASTEBIN_DELETE_SNIPPET_EXPLAIN'	=> 'Deletes the entry from the database. This cannot be undone.',
 	'PASTEBIN_DOWNLOAD_SNIPPET'			=> 'Download as file',
 	'PASTEBIN_DOWNLOAD_SNIPPET_EXPLAIN'	=> 'Alternatively, you can %sdownload%s the whole entry as a file.',
+	'PASTEBIN_SNIPPET_SECRET'			=> 'Make entry secret',
+	'PASTEBIN_SNIPPET_SECRET_SHORT'		=> 'Secret',
 
 	'DISALLOWED_EXTENSION'	=> 'The file extension %s is not allowed.',
 

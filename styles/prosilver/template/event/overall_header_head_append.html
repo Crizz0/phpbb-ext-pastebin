@@ -1,1 +1,4 @@
 {% INCLUDECSS '@phpbbde_pastebin/pastebin.css' %}
+{% if S_PASTEBIN_VIEW %}
+	<link rel="stylesheet" href="{{ U_HIGHLIGHT_CSS }}">
+{% endif %}

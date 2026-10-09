@@ -20,6 +20,9 @@ class main
 	const SECONDS_MONTH = 2592000;
 	const SECONDS_YEAR  = 31536000;
 
+	/** @var array|null Cache für aktive Sprachen [lang_name_clean => lang_name] */
+	private ?array $active_langs = null;
+
 	/**
 	 * Construct
 	 *
@@ -55,6 +58,7 @@ class main
 		protected $php_ext,
 		protected $highlighter,
 		protected $pastebin_table,
+		protected $pastebin_langs_table,
 	)
 	{
 	}
@@ -84,7 +88,7 @@ class main
 	{
 		// Request variables
 		$mode				= $this->request->variable('mode', '');
-		$snippet_hash		= $this->request->variable('s', 0);
+		$snippet_hash		= $this->request->variable('s', '');
 		$submit				= $this->request->is_set_post('submit');
 
 		if (in_array($mode, array('view', 'download', 'moderate', 'edit_snippet')))
@@ -96,7 +100,7 @@ class main
 					$this->pastebin_table	=> 'pb',
 					USERS_TABLE		=> 'u',
 				),
-				'WHERE'		=> "pb.snippet_author = u.user_id AND pb.snippet_hash = $snippet_hash",
+				'WHERE'		=> "pb.snippet_author = u.user_id AND pb.snippet_hash = '" . $this->db->sql_escape($snippet_hash) . "'",
 			));
 			$result = $this->db->sql_query($sql);
 			$data   = $this->db->sql_fetchrow($result);
@@ -129,9 +133,11 @@ class main
 				'FROM'		=> array(
 						$this->pastebin_table	=> 'pb',
 						USERS_TABLE		=> 'u',
-				),//  Show all snippets to everyone and secret ones just to their author
+				),
+				//  Show all snippets to everyone and secret ones just to their author
 				'WHERE'		=> 'pb.snippet_author = u.user_id
-						OR pb.snippet_secret = 0',
+					AND (pb.snippet_secret = 0
+						OR pb.snippet_author = ' . (int) $this->user->data['user_id'] . ')',
 				'ORDER_BY'	=> 'pb.snippet_time DESC'
 		]);
 		$result = $this->db->sql_query_limit($sql, 20);
@@ -139,7 +145,7 @@ class main
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$this->template->assign_block_vars('latest_snippets', array(
-				'URL'			=> $this->helper->route('phpbbde_pastebin_main_controller', array('mode'=>'view', 's' => $row['snippet_id'])),
+				'URL'			=> $this->helper->route('phpbbde_pastebin_main_controller', array('mode'=>'view', 's' => $row['snippet_hash'])),
 				'DESC'			=> $row['snippet_desc'],
 				'TITLE'			=> $row['snippet_title'],
 				'SNIPPET_TIME'	=> $this->user->format_date($row['snippet_time']),
@@ -189,7 +195,7 @@ class main
 					trigger_error($message);
 				}
 
-        break;
+		break;
 
 			case 'post':
 				// process submitted data from the posting form
@@ -208,7 +214,7 @@ class main
 						'snippet_desc'		=> str_replace("\n", '', $this->request->variable('snippet_desc', '', true)),
 						'snippet_text'		=> $this->request->raw_variable('snippet_text', ''),
 						'snippet_prunable'	=> 1,
-						'snippet_highlight'	=> $this->request->variable('snippet_highlight', ''),
+						'snippet_highlight' => $this->validate_language($this->request->variable('snippet_highlight', '')),
 						'snippet_prune_on'	=> max(1, min(6, $this->request->variable('pruning_months', 0))),
 				);
 
@@ -297,7 +303,7 @@ class main
 					// Remove duplicate entries of the error array
 					$error = array_unique($error);
 					// We have errors, we don't insert here, but instead go back to the submit page and tell the user what he did wrong
-					$s_error = implode('<br />', $error);
+					$s_error = implode('<br>', $error);
 				}
 				else
 				{
@@ -326,7 +332,7 @@ class main
 					$redirect_url = $this->helper->route('phpbbde_pastebin_main_controller', array('mode' => "view", 's' => $snippet_hash));
 
 					meta_refresh(3, $redirect_url);
-					trigger_error($this->language->lang('PASTEBIN_SNIPPET_SUBMITTED') . '<br /><br />' . $this->language->lang('PASTEBIN_RETURN_SNIPPET', '<a href="' . $redirect_url . '">', '</a>'));
+					trigger_error($this->language->lang('PASTEBIN_SNIPPET_SUBMITTED') . '<br><br>' . $this->language->lang('PASTEBIN_RETURN_SNIPPET', '<a href="' . $redirect_url . '">', '</a>'));
 				}
 
 				break;
@@ -345,14 +351,12 @@ class main
 
 					$snippet_text = $data['snippet_text'];
 
-					$highlight = ($this->request->is_set('highlight')) ? $this->request->variable('highlight', '') : $data['snippet_highlight'];
+					$highlight = $this->request->is_set('highlight')
+						? $this->validate_language($this->request->variable('highlight', ''))
+						: ((string) $data['snippet_highlight'] ?: 'text');
 
-					$code = $snippet_text;
-
-                    $highlighter = new \Tempest\Highlight\Highlighter();
-                    // TODO: Add option to change language used at this point html,css etc.
-                    // Get the input from the database, which gets feed from user input
-                    $code = $highlighter->parse($code, $highlight);
+					$highlighter = new \Tempest\Highlight\Highlighter();
+					$code = $highlighter->parse($snippet_text, $highlight);
 
 					$snippet_text_display = &$code;
 
@@ -360,7 +364,7 @@ class main
 							's'		=> $snippet_hash,
 					));
 
-					$snippet_download_url = $this->helper->route('phpbbde_pastebin_main_controller', array("mode" => "download", "s" => $data['snippet_id']));
+					$snippet_download_url = $this->helper->route('phpbbde_pastebin_main_controller', array("mode" => "download", "s" => $data['snippet_hash']));
 
 					$this->template->assign_vars(array(
 						'SNIPPET_TEXT_ORIG'		=> $snippet_text,
@@ -376,13 +380,15 @@ class main
 						'SNIPPET_AUTHOR_FULL'	=> get_username_string('full', $data['user_id'], $data['username'], $data['user_colour']),
 						'SNIPPET_DATE'			=> $this->user->format_date($data['snippet_time']),
 
-						'HIGHLIGHT_SELECT_MOD'	=> $data['snippet_highlight'],
+						'HIGHLIGHT_SELECT_MOD' => $this->highlight_select((string) $data['snippet_highlight']),
 						'DOWNLOAD_SNIPPET_EXPLAIN'	=> $this->language->lang('PASTEBIN_DOWNLOAD_SNIPPET_EXPLAIN', '<a href="' . $snippet_download_url . '">', '</a>'),
 
-						'U_SNIPPET'				=> $this->helper->route('phpbbde_pastebin_main_controller', array("mode" => "view", "s" => $data['snippet_id'])),
+						'U_HIGHLIGHT_CSS'	=> generate_board_url() . '/ext/phpbbde/pastebin/assets/tempest/highlight/src/Themes/Css/highlight-light-lite.css',
+						'U_SNIPPET'	=> $this->helper->route('phpbbde_pastebin_main_controller', array("mode" => "view", "s" => $data['snippet_hash'])),
 						'U_SNIPPET_DOWNLOAD'	=> $snippet_download_url,
 
 						'S_HIGHLIGHT'			=> $highlight,
+						'S_PASTEBIN_VIEW' => true,
 						'S_HIDDEN_FIELDS_V'		=> build_hidden_fields($s_hidden_fields),
 						'S_FORM_ACTION_MOD'		=> $this->helper->route('phpbbde_pastebin_main_controller', array(), true, $this->user->session_id),
 					));
@@ -398,7 +404,7 @@ class main
 					// Thanks download.php
 					$snippet_text = $data['snippet_text'];
 
-					$filename = $data['snippet_title'] . '.' . $this->pastebin->file_ext();
+					$filename = $data['snippet_title'] . '.' . $this->get_file_extension($data['snippet_highlight']);
 
 					$user_agent = $this->request->server('HTTP_USER_AGENT', '');
 					if (strpos($user_agent, 'MSIE') !== false || strpos($user_agent, 'Safari') !== false || strpos($user_agent, 'Konqueror') !== false)
@@ -429,7 +435,7 @@ class main
 				else if ($mode == 'moderate')
 				{
 					$delete			= $this->request->is_set_post('delete_snippet');
-					$highlight		= $this->request->variable('snippet_highlight', '');
+					$highlight = $this->validate_language($this->request->variable('snippet_highlight', ''));
 					$pruning_months	= $this->request->variable('pruning_months', 0);
 					$prunable		= $pruning_months != -1;
 
@@ -452,7 +458,7 @@ class main
 						// Confirm box
 						if (!confirm_box(true))
 						{
-							$hidden = build_hidden_fields(array('mode' => 'moderate', 's' => $snippet_id, 'delete_snippet' => 1));
+							$hidden = build_hidden_fields(array('mode' => 'moderate', 's' => $snippet_hash, 'delete_snippet' => 1));
 							confirm_box(false, $this->language->lang('PASTEBIN_DELETE_SNIPPET_CONFIRM', $data['snippet_title']), $hidden);
 						}
 						else
@@ -470,7 +476,7 @@ class main
 						));
 						$snippet->submit();
 
-						$redirect_append = array("mode"=>"view","s"=>$snippet_id);
+						$redirect_append = array("mode"=>"view","s"=>$snippet_hash);
 					}
 					else
 					{
@@ -545,9 +551,9 @@ class main
 
 		if (!isset($highlight))
 		{
-			$highlight = $data['snippet_highlight'] ?? 'php';
+			$highlight = $this->validate_language($data['snippet_highlight'] ?? 'php');
 		}
-		$highlight_select = $highlight; // $this->util->highlight_select($highlight);
+		$highlight_select = $this->highlight_select($highlight);
 
 		$captcha_in_use = $this->config['captcha_plugin'];
 		$is_recaptcha = strpos($captcha_in_use, 'recaptcha');
@@ -572,5 +578,74 @@ class main
 				'S_HIDDEN_FIELDS'	=> build_hidden_fields($s_hidden_fields),
 				'S_CONFIRM_CODE'	=> !$this->auth->acl_get('u_pastebin_post_novc'),
 		));
+	}
+
+	/**
+	 * Liefert alle aktiven Sprachen als [lang_name_clean => lang_name]
+	 */
+	private function get_active_languages(): array
+	{
+		if ($this->active_langs === null)
+		{
+			$this->active_langs = [];
+
+			$sql = 'SELECT lang_name, lang_name_clean
+                FROM ' . $this->pastebin_langs_table . '
+                WHERE lang_active = 1
+                ORDER BY lang_name ASC';
+			$result = $this->db->sql_query($sql);
+			while ($row = $this->db->sql_fetchrow($result))
+			{
+				$this->active_langs[$row['lang_name_clean']] = $row['lang_name'];
+			}
+			$this->db->sql_freeresult($result);
+		}
+
+		return $this->active_langs;
+	}
+
+	/**
+	 * Baut die <option>-Tags für die Auswahl
+	 */
+	private function highlight_select(string $selected): string
+	{
+		$html = '';
+		foreach ($this->get_active_languages() as $clean => $name)
+		{
+			$sel = ($clean === $selected) ? ' selected="selected"' : '';
+			$html .= '<option value="' . htmlspecialchars($clean) . '"' . $sel . '>' . htmlspecialchars($name) . '</option>';
+		}
+
+		return $html;
+	}
+
+	/**
+	 * Gibt nur eine aktive Sprache zurück, sonst einen Fallback
+	 */
+	private function validate_language(string $lang): string
+	{
+		$langs = $this->get_active_languages();
+
+		if (isset($langs[$lang]))
+		{
+			return $lang;
+		}
+
+		return isset($langs['php']) ? 'php' : (array_key_first($langs) ?? 'text');
+	}
+
+	/**
+	 * Liefert die Dateiendung zu einer Sprache aus phpbb_pastebin_langs
+	 */
+	private function get_file_extension(string $lang_clean): string
+	{
+		$sql = 'SELECT lang_file_extension
+			FROM ' . $this->pastebin_langs_table . "
+			WHERE lang_name_clean = '" . $this->db->sql_escape($lang_clean) . "'";
+		$result = $this->db->sql_query_limit($sql, 1);
+		$ext = $this->db->sql_fetchfield('lang_file_extension');
+		$this->db->sql_freeresult($result);
+
+		return $ext ? ltrim($ext, '.') : 'txt';
 	}
 }

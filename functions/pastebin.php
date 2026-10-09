@@ -1,7 +1,7 @@
 <?php
 /**
  * @package pastebin
- * @copyright (c) 2015 gn#36
+ * @copyright (c) 2015 gn#36 & 2026 Crizzo
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 
@@ -18,9 +18,6 @@ class pastebin implements \ArrayAccess
 	/** @var array */
 	protected $data;
 
-	/** @var array */
-	protected $file_ext;
-
 	/** @var \phpbb\db\driver\driver_interface */
 	protected $db;
 
@@ -36,24 +33,6 @@ class pastebin implements \ArrayAccess
 		$this->user = $user;
 		$this->pastebin_table = $pastebin_table;
 		$this->empty_data();
-
-		$this->file_ext = array(
-            'base'               => '',
-            'blade'               => '',
-            'css'               => 'css',
-            'DocComment'        => '',
-            'gdscript'          => '',
-            'html'              => 'html',
-            'javascript'        => 'js',
-            'json'              => 'json',
-            'php'               => 'php',
-            'mysql'             => 'sql',
-            'text'              => 'txt',
-            'twig'              => 'html',
-            'xml'               => 'xml',
-            'yaml'              => 'yml',
-		);
-
 	}
 
 	/**
@@ -84,6 +63,8 @@ class pastebin implements \ArrayAccess
 		$sql = 'SELECT * FROM ' . $this->pastebin_table . ' WHERE snippet_id = ' . (int) $id;
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
+		$this->db->sql_freeresult($result);
+
 		if ($row)
 		{
 			$this->data = $row;
@@ -142,29 +123,15 @@ class pastebin implements \ArrayAccess
 		$this->empty_data();
 	}
 
-	/**
-	 * Returns file extension for this entry depending on syntax highlighting.
-	 *
-	 * This will probably not always be correct, but more often than always using "txt".
-	 */
-	function file_ext()
-	{
-		if (isset($this->file_ext[$this->data['snippet_highlight']]))
-		{
-			return $this->file_ext[$this->data['snippet_highlight']];
-		}
-		return 'txt';
-	}
-
 	// ArrayAccess
 	//
 
-	function offsetExists($offset)
+	public function offsetExists(mixed $offset): bool
 	{
 		return isset($this->data[$offset]);
 	}
 
-	function offsetGet($offset)
+	public function offsetGet(mixed $offset): mixed
 	{
 		if (!isset($this->data[$offset]))
 		{
@@ -173,7 +140,7 @@ class pastebin implements \ArrayAccess
 		return $this->data[$offset];
 	}
 
-	function offsetSet($offset, $value)
+	public function offsetSet(mixed $offset, mixed $value): void
 	{
 		if (!isset($this->data[$offset]))
 		{
@@ -183,7 +150,7 @@ class pastebin implements \ArrayAccess
 		$this->data[$offset] = $value;
 	}
 
-	function offsetUnset($offset)
+	public function offsetUnset(mixed $offset): void
 	{
 		// still needed, even if empty
 	}

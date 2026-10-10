@@ -56,6 +56,7 @@ services:
             - '@language'
             - '@request'
             - '@template'
+            - '%phpbbde.pastebin.tables.pastebin_langs%'
 
     phpbbde.pastebin.base_listener:
         class: phpbbde\pastebin\event\base_events

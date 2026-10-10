@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'tempest/highlight' => array(
-            'pretty_version' => '2.25.0',
-            'version' => '2.25.0.0',
-            'reference' => 'ec0bb3353912244bd04acb7155694d3ea352f53f',
+            'pretty_version' => '2.28.1',
+            'version' => '2.28.1.0',
+            'reference' => 'e04f3d4dd65a7ce3456537584e38cec2eedddd3b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../tempest/highlight',
             'aliases' => array(),

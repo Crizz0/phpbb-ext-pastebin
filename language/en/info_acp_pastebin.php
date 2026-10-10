@@ -33,7 +33,9 @@ if (empty($lang) || !is_array($lang))
 // ’ « » “ ” … „ “
 
 $lang = array_merge($lang, [
-// ACP
+	// ACP
+	'ACP_PASTEBIN_TITLE'	=>'Pastebin',
+
 	'PASTEBIN_NAV_TITLE' 	=> 'Pastebin',
 	'PASTEBIN_NAV_CONFIG' 	=> 'Pastebin - Settings',
 	'PASTEBIN_NAV_LANGS' 	=> 'Pastebin - Languages',
@@ -56,8 +58,9 @@ $lang = array_merge($lang, [
 	'PASTEBIN_UPDATED' 		=> 'The Pastebin settings have been updated.',
 
 	// Lang-Keys for the Pastebin-Lang-ACP-page
-	'PASTEBIN_LANG_CONFIG' 			=> 'Pastebin - Languages',
-	'PASTEBIN_LANG_CONFIG_EXPLAIN' 	=> 'On this page can be setup, which languages can be used by the Highlighter.',
+	'PASTEBIN_LANG_SETTINGS'			=> 'Pastebin - Languages settings',
+	'PASTEBIN_LANG_SETTINGS_EXPLAIN'	=> 'On this page the available languages can be seen by ID, name, file extension and set active or not active. For 
+											not active languages the highlighter cannot be used by the users in the dropdown menu.',
 
 	// Table header - languages overview page
 	'PASTEBIN_TABLE_LANG_ID' 			=> 'Language-ID',

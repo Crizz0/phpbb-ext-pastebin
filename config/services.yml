@@ -12,6 +12,8 @@ services:
         arguments:
             - '%core.php_ext%'
             - '@language'
+            - '@dbal.conn'
+            - '%phpbbde.pastebin.tables.pastebin_langs%'
 
     phpbbde.pastebin.functions.pastebin:
         class: phpbbde\pastebin\functions\pastebin
@@ -41,6 +43,7 @@ services:
             - '%phpbbde.pastebin.highlight%'
             - '%phpbbde.pastebin.tables.pastebin%'
             - '%phpbbde.pastebin.tables.pastebin_langs%'
+            - '@phpbbde.pastebin.functions.utility'
 
     phpbbde.pastebin.settings.acp:
         class: phpbbde\pastebin\controller\acp_pastebin_settings

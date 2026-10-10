@@ -7,25 +7,46 @@
 */
 
 namespace phpbbde\pastebin\functions;
-// TODO: this won't be needed any longer
+
 class utility
 {
-	/** @var string */
-	protected $php_ext;
 
-	/* @var \phpbb\language\language */
-	protected $language;
 
 	/**
 	 * Constructor
 	 * @param string $php_ext
 	 * @param \phpbb\language\language	$language
+	 * @param $pastebin_langs_table
 	 */
 	function __construct(
-		$php_ext,
-		\phpbb\language\language $language)
+		protected $php_ext,
+		protected \phpbb\language\language $language,
+		protected \phpbb\db\driver\driver_interface $db,
+		protected $pastebin_langs_table)
 	{
-		$this->php_ext 		= $php_ext;
-		$this->language		= $language;
+
+	}
+
+	/**
+	 * Returns all file extensions from active languages (for uploading)
+	 */
+	public function get_allowed_extensions(): array
+	{
+		$exts = [];
+
+		$sql = 'SELECT lang_file_extension
+		FROM ' . $this->pastebin_langs_table . '
+		WHERE lang_active = 1';
+		$result = $this->db->sql_query($sql);
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			if (!empty($row['lang_file_extension']))
+			{
+				$exts[] = strtolower(ltrim($row['lang_file_extension'], '.'));
+			}
+		}
+		$this->db->sql_freeresult($result);
+
+		return array_values(array_unique($exts)) ?: ['txt'];
 	}
 }

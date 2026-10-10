@@ -59,6 +59,7 @@ class main
 		protected $highlighter,
 		protected $pastebin_table,
 		protected $pastebin_langs_table,
+		protected $utility,
 	)
 	{
 	}
@@ -242,8 +243,8 @@ class main
 				if (!empty($filedata) && $filedata['name'] != 'none' && trim($filedata['name']))
 				{
 					$upload = $this->factory->get('files.upload');
-					// TODO: Load extensions from the Database
-					$allowed_extensions = array('txt', 'php', 'html', 'xml', 'md', 'json', 'yml', 'js', 'diff', 'sql', 'pl');
+
+					$allowed_extensions = $this->utility->get_allowed_extensions();
 
 					$file = $upload
 						->set_allowed_extensions($allowed_extensions)
@@ -592,7 +593,7 @@ class main
 	}
 
 	/**
-	 * Liefert alle aktiven Sprachen als [lang_name_clean => lang_name]
+	 * Returns all active languages as [lang_name_clean => lang_name]
 	 */
 	private function get_active_languages(): array
 	{
@@ -616,7 +617,7 @@ class main
 	}
 
 	/**
-	 * Baut die <option>-Tags für die Auswahl
+	 * Building the option html elements
 	 */
 	private function highlight_select(string $selected): string
 	{
@@ -631,7 +632,7 @@ class main
 	}
 
 	/**
-	 * Gibt nur eine aktive Sprache zurück, sonst einen Fallback
+	 * Returns only active languages, if not gives a fallback
 	 */
 	private function validate_language(string $lang): string
 	{
@@ -646,7 +647,7 @@ class main
 	}
 
 	/**
-	 * Liefert die Dateiendung zu einer Sprache aus phpbb_pastebin_langs
+	 * Gets the file extensions from phpbb_pastebin_langs
 	 */
 	private function get_file_extension(string $lang_clean): string
 	{

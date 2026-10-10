@@ -1,85 +1,94 @@
-.pastebin #pastebin-codebox {
-	font-size: 1.2em;
-}
+.pastebin {
+	& #pastebin-codebox {
+		font-size: 15px;
+	}
 
-.pastebin #pastebin-codebox dd {
-	margin: 0 0 0 4em;
-	padding: 5px 0 0 1px;
-}
 
-.pastebin #pastebin-codebox dt {
-	text-transform: uppercase;
-	border-bottom: 1px solid #ccc;
-	font-size: 0.8em;
-	font-weight: bold;
-	display:block;
-	padding: 3px 0 0.5% 2px;
-}
+	& #pastebin-codebox dd {
+		margin: 0;
+		padding: 5px 0 0 1px;
 
-.pastebin .mini-panel {
-	display: block;
-	font-size: 110%;
-	padding: 1% ;
-	margin-top: 12px;
-	margin-bottom: 12px;
-}
+		& code {
+			max-height: none;
+		}
+	}
 
-.pastebin .new-entry {
-	float: right;
-	line-height: 1.5;
-	margin-right: 10px;
-	width: 30%
-}
+	& #pastebin-codebox dt {
+		text-transform: uppercase;
+		border-bottom: 1px solid #ccc;
+		font-size: 0.8em;
+		font-weight: bold;
+		display:block;
+		padding: 3px 0 0.5% 2px;
+	}
 
-.pastebin .last-snippets {
-	float: right;
-	line-height: 1.5;
-	margin: 20px 10px 0 0;
-	width: 30%;
-}
+	& .mini-panel {
+		display: block;
+		font-size: 110%;
+		padding: 1% ;
+		margin-top: 12px;
+		margin-bottom: 12px;
+	}
 
-.pastebin .mod-panel {
-	float: left;
-	width: 63%;
-}
+	& .new-entry {
+		float: right;
+		line-height: 1.5;
+		margin-right: 10px;
+		width: 30%
+	}
 
-.pastebin #content {
-	font-size: 105%;
-	float: left;
-	width: 65%;
-}
+	& .last-snippets {
+		float: right;
+		line-height: 1.5;
+		margin: 20px 10px 0 0;
+		width: 30%;
+	}
 
-.pastebin #extras {
-	width: 100%;
-}
+	& .mod-panel {
+		float: left;
+		width: 63%;
+	}
 
-.pastebin .mini-panel h3 {
-	margin-top: 0;
-}
+	& #content {
+		font-size: 105%;
+		float: left;
+		width: 65%;
 
-.pastebin .mini-panel ul {
-	padding-left: 12px;
-}
+		& h3 {
+			font-size: 16px;
+		}
+	}
 
-.pastebin #copy_paste.inputbox{
-	min-width: 100%;
-	max-width: 100%;
-	border:none;
-}
+	& #extras {
+		width: 100%;
+	}
 
-.pastebin .textwrapper{
-	border: 1px solid #B4BAC0;
-	padding: 5px;
-	margin-bottom: 10px;
-	margin-top: 10px;
+	& .mini-panel h3 {
+		font-size: 14px;
+		margin-top: 0;
+	}
+
+	& .mini-panel ul {
+		padding-left: 12px;
+	}
+
+	& #copy_paste.inputbox{
+		min-width: 100%;
+		max-width: 100%;
+		border:none;
+	}
+
+	& .textwrapper{
+		border: 1px solid #B4BAC0;
+		padding: 5px;
+		margin-bottom: 10px;
+		margin-top: 10px;
+	}
 }
 
 /* Responsive */
 @media (max-width: 860px) {
-	.pastebin .last-snippets,
-	.pastebin .mod-panel,
-	.pastebin .new-entry,
-	.pastebin #content {
+	.pastebin :is(.last-snippets, .mod-panel, .new-entry, #content) {
 		float: none;
 		margin: 10px 0;
 		width: auto;

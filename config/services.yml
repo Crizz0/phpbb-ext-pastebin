@@ -1,22 +1,22 @@
 parameters:
     phpbbde.pastebin.path: '%core.root_path%ext/phpbbde/pastebin/'
-    phpbbde.pastebin.geshi: '%phpbbde.pastebin.path%vendor/easybook/geshi/'
-    phpbbde.pastebin.geshilangs: '%phpbbde.pastebin.geshi%geshi/'
+    phpbbde.pastebin.highlight: '%phpbbde.pastebin.path%assets/tempest/highlight/'
     phpbbde.pastebin.cron.prune_interval: 86400
-    tables.phpbbde.pastebin.pastebin: '%core.table_prefix%pastebin'
+
+imports:
+    - { resource: tables.yml }
+
 services:
-    phpbbde.pastebin.functions.utility:
-        class: phpbbde\pastebin\functions\utility
-        arguments:
-            - '%phpbbde.pastebin.geshilangs%'
-            - '%core.php_ext%'
-            - '@language'
     phpbbde.pastebin.functions.pastebin:
         class: phpbbde\pastebin\functions\pastebin
         arguments:
             - '@dbal.conn'
+            - '@language'
             - '@user'
-            - '%tables.phpbbde.pastebin.pastebin%'
+            - '%core.php_ext%'
+            - '%phpbbde.pastebin.tables.pastebin%'
+            - '%phpbbde.pastebin.tables.pastebin_langs%'
+
     phpbbde.pastebin.controller.main:
         class: phpbbde\pastebin\controller\main
         arguments:
@@ -31,12 +31,32 @@ services:
             - '@files.factory'
             - '@controller.helper'
             - '@captcha.factory'
-            - '@phpbbde.pastebin.functions.utility'
             - '@phpbbde.pastebin.functions.pastebin'
             - '%core.root_path%'
             - '%core.php_ext%'
-            - '%phpbbde.pastebin.geshilangs%'
-            - '%tables.phpbbde.pastebin.pastebin%'
+            - '%phpbbde.pastebin.highlight%'
+            - '%phpbbde.pastebin.tables.pastebin%'
+            - '%phpbbde.pastebin.tables.pastebin_langs%'
+
+    phpbbde.pastebin.settings.acp:
+        class: phpbbde\pastebin\controller\acp_pastebin_settings
+        arguments:
+            - '@auth'
+            - '@config'
+            - '@dbal.conn'
+            - '@language'
+            - '@request'
+            - '@template'
+
+    phpbbde.pastebin.languages.acp:
+        class: phpbbde\pastebin\controller\acp_pastebin_languages
+        arguments:
+            - '@auth'
+            - '@dbal.conn'
+            - '@language'
+            - '@request'
+            - '@template'
+
     phpbbde.pastebin.base_listener:
         class: phpbbde\pastebin\event\base_events
         arguments:
@@ -52,14 +72,22 @@ services:
         class: phpbbde\pastebin\event\acp_events
         tags:
             - {name: event.listener}
+
     phpbbde.pastebin.cron.main:
         class: phpbbde\pastebin\cron\main
         arguments:
             - '@config'
             - '@dbal.conn'
             - '%phpbbde.pastebin.cron.prune_interval%'
-            - '%tables.phpbbde.pastebin.pastebin%'
+            - '%phpbbde.pastebin.tables.pastebin%'
         calls:
             - [set_name, [phpbbde.pastebin.cron.main]]
         tags:
             - {name: cron.task}
+
+    phpbbde.pastebin.listener:
+        class: phpbbde\pastebin\event\permission_listener
+        arguments:
+            - '@auth'
+        tags:
+            - { name: event.listener }

@@ -4,9 +4,9 @@
 * pastebin [German]
 *
 * @package language
-* @version 0.1.3
+* @version 3.0.0
 * Translator Mahony http://www.sportschulekang.de and http://nationsofmetal.na.funpic.de/forum/
-* @copyright (c) 2007 eviL3
+* @copyright (c) 2026 phpBB.de
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -37,12 +37,15 @@ $lang = array_merge($lang, array(
 	'PASTEBIN_DELETE_SNIPPET_EXPLAIN'	=> 'Löscht den Eintrag aus der Datenbank. Diese Aktion kann nicht rückgängig gemacht werden.',
 	'PASTEBIN_DOWNLOAD_SNIPPET'			=> 'Eintrag herunterladen',
 	'PASTEBIN_DOWNLOAD_SNIPPET_EXPLAIN'	=> 'Alternativ kannst du den gesamten Eintrag auch als Datei %sherunterladen%s.',
+	'PASTEBIN_SNIPPET_SECRET'			=> 'Eintrag privat schalten',
+	'PASTEBIN_SNIPPET_SECRET_SHORT'		=> 'Privat',
 
 	'DISALLOWED_EXTENSION'	=> 'Die Dateierweiterung %s ist nicht erlaubt',
 
 	'PASTEBIN_ERR_NO_BODY'				=> 'Du hast keinen Code eingefügt oder keine gültige Datei zum Upload ausgewählt.',
 	'PASTEBIN_ERR_NO_TITLE'				=> 'Du hast keinen Titel für den Eintrag eingegeben.',
 	'PASTEBIN_ERR_NO_DESC'				=> 'Du hast keine Beschreibung für den Eintrag eingegeben.',
+	'PASTEBIN_ERR_WRONG_SECRET'			=> 'Ungültiger Wert für privates Snippet.',
 	'PASTEBIN_FORM_INVALID'				=> 'Ungültiges Formular.',
 
 	'PASTEBIN_HIGHLIGHT_LANG'			=> 'Syntaxhervorhebung',
@@ -104,16 +107,23 @@ $lang = array_merge($lang, array(
 	'PASTEBIN_SNIPPET_PRUNABLE'			=> 'Eintrag prunable - automatisch löschbar',
 	'PASTEBIN_SNIPPET_PRUNABLE_EXPLAIN'	=> 'Wenn diese Option deaktiviert ist, wird der Eintrag nicht in die monatlich automatisch zu löschenden Einträge aufgenommen.',
 	'PASTEBIN_SNIPPET_SUBMITTED'			=> 'Dein Eintrag wurde erfolgreich erstellt.',
-	'PASTEBIN_SNIPPET_SAVE'				=> 'Änderungen speichern',
+	'PASTEBIN_SNIPPET_SAVE'				    => 'Änderungen speichern',
 
 	// Language keys for Syntax highlighting dropdown
-	'PASTEBIN_LANGS_TEXT' 		=> 'Text',
-	'PASTEBIN_LANGS_PHP'		=> 'PHP',
-	'PASTEBIN_LANGS_SQL' 		=> 'SQL',
-	'PASTEBIN_LANGS_HTML5' 		=> 'HTML',
+	'PASTEBIN_LANGS_BASE'		=> 'Base',
+	'PASTEBIN_LANGS_BLADE'		=> 'Blade',
 	'PASTEBIN_LANGS_CSS' 		=> 'CSS',
-	'PASTEBIN_LANGS_JAVASCRIPT'	=> 'JavaScript',
-	'PASTEBIN_LANGS_XML' 		=> 'XML',
 	'PASTEBIN_LANGS_DIFF' 		=> 'diff',
-	'PASTEBIN_LANGS_ROBOTS' 	=> 'Robots.txt',
+	'PASTEBIN_LANGS_DOCCOMMENT'	=> 'DocComment',
+	'PASTEBIN_LANGS_GDSCRIPT'	=> 'GDScript',
+	'PASTEBIN_LANGS_HTML' 		=> 'HTML',
+	'PASTEBIN_LANGS_JAVASCRIPT'	=> 'JavaScript',
+	'PASTEBIN_LANGS_JSON' 		=> 'Json',
+	'PASTEBIN_LANGS_PHP' 		=> 'PHP',
+	'PASTEBIN_LANGS_ROBOTS'		=> 'Robots.txt',
+	'PASTEBIN_LANGS_SQL' 		=> 'SQL',
+	'PASTEBIN_LANGS_TEXT'		=> 'Text',
+	'PASTEBIN_LANGS_TWIG' 		=> 'Twig',
+	'PASTEBIN_LANGS_XML' 		=> 'XML',
+	'PASTEBIN_LANGS_YAML' 		=> 'Yaml',
 ));

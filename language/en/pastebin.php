@@ -36,12 +36,15 @@ $lang = array_merge($lang, array(
 	'PASTEBIN_DELETE_SNIPPET_EXPLAIN'	=> 'Deletes the entry from the database. This cannot be undone.',
 	'PASTEBIN_DOWNLOAD_SNIPPET'			=> 'Download as file',
 	'PASTEBIN_DOWNLOAD_SNIPPET_EXPLAIN'	=> 'Alternatively, you can %sdownload%s the whole entry as a file.',
+	'PASTEBIN_SNIPPET_SECRET'			=> 'Make entry secret',
+	'PASTEBIN_SNIPPET_SECRET_SHORT'		=> 'Secret',
 
 	'DISALLOWED_EXTENSION'	=> 'The file extension %s is not allowed.',
 
 	'PASTEBIN_ERR_NO_BODY'				=> 'You did not enter any code or a valid file for upload.',
 	'PASTEBIN_ERR_NO_TITLE'				=> 'You did not enter a title for your entry.',
 	'PASTEBIN_ERR_NO_DESC'				=> 'You did not enter a description for your entry.',
+	'PASTEBIN_ERR_WRONG_SECRET'			=> 'Invalid value for secret snippet.',
 	'PASTEBIN_FORM_INVALID'				=> 'Invalid form.',
 
 	'PASTEBIN_HIGHLIGHT_LANG'			=> 'Syntax highlighting',
@@ -106,13 +109,20 @@ $lang = array_merge($lang, array(
 	'PASTEBIN_SNIPPET_SAVE'				=> 'Save edited snippet',
 
 	// Language keys for Syntax highlighting dropdown
-	'PASTEBIN_LANGS_TEXT'		=> 'Text',
-	'PASTEBIN_LANGS_PHP' 		=> 'PHP',
-	'PASTEBIN_LANGS_SQL' 		=> 'SQL',
-	'PASTEBIN_LANGS_HTML5' 		=> 'HTML',
+	'PASTEBIN_LANGS_BASE'		=> 'Base',
+	'PASTEBIN_LANGS_BLADE'		=> 'Blade',
 	'PASTEBIN_LANGS_CSS' 		=> 'CSS',
-	'PASTEBIN_LANGS_JAVASCRIPT'	=> 'JavaScript',
-	'PASTEBIN_LANGS_XML' 		=> 'XML',
 	'PASTEBIN_LANGS_DIFF' 		=> 'diff',
+	'PASTEBIN_LANGS_DOCCOMMENT'	=> 'DocComment',
+	'PASTEBIN_LANGS_GDSCRIPT'	=> 'GDScript',
+	'PASTEBIN_LANGS_HTML' 		=> 'HTML',
+	'PASTEBIN_LANGS_JAVASCRIPT'	=> 'JavaScript',
+	'PASTEBIN_LANGS_JSON' 		=> 'Json',
+	'PASTEBIN_LANGS_PHP' 		=> 'PHP',
 	'PASTEBIN_LANGS_ROBOTS'		=> 'Robots.txt',
+	'PASTEBIN_LANGS_SQL' 		=> 'SQL',
+	'PASTEBIN_LANGS_TEXT'		=> 'Text',
+	'PASTEBIN_LANGS_TWIG' 		=> 'Twig',
+	'PASTEBIN_LANGS_XML' 		=> 'XML',
+	'PASTEBIN_LANGS_YAML' 		=> 'Yaml',
 ));

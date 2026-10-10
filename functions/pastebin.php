@@ -1,7 +1,7 @@
 <?php
 /**
  * @package pastebin
- * @copyright (c) 2015 gn#36
+ * @copyright (c) 2015 gn#36 & 2026 Crizzo
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 
@@ -16,112 +16,29 @@ namespace phpbbde\pastebin\functions;
 class pastebin implements \ArrayAccess
 {
 	/** @var array */
-	protected $data;
+	protected array $data;
 
-	/** @var array */
-	protected $file_ext;
+	/** @var array|null Cache für aktive Sprachen [lang_name_clean => lang_name] */
+	private ?array $active_langs = null;
 
-	/** @var \phpbb\db\driver\driver_interface */
-	protected $db;
-
-	/** @var \phpbb\user */
-	protected $user;
-
-	/** @var string */
-	protected $pastebin_table;
-
-	function __construct(\phpbb\db\driver\driver_interface $db, \phpbb\user $user, $pastebin_table)
+	/**
+	 * Constructor
+	 * @param string $php_ext
+	 * @param \phpbb\db\driver\driver_interface $db
+	 * @param \phpbb\language\language	$language
+	 * @param \phpbb\user $user
+	 * @param $pastebin_table
+	 * @param $pastebin_langs_table
+	 */
+	function __construct(
+		protected \phpbb\db\driver\driver_interface $db,
+		protected \phpbb\language\language $language,
+		protected \phpbb\user $user,
+		protected $php_ext,
+		protected $pastebin_table,
+		protected $pastebin_langs_table)
 	{
-		$this->db = $db;
-		$this->user = $user;
-		$this->pastebin_table = $pastebin_table;
 		$this->empty_data();
-
-		$this->file_ext = array(
-			'text'				=> 'txt',
-			'php'				=> 'php',
-			'sql'				=> 'sql',
-			'html4strict'		=> 'htm',
-			'css'				=> 'css',
-			'javascript'		=> 'js',
-			'java'				=> 'java',
-			'xml'				=> 'xml',
-			'asp'				=> 'asp',
-			'c'					=> 'c',
-			'cpp'				=> 'cpp',
-			'csharp'			=> 'cs',
-			'perl'				=> 'pl',
-			'vb'				=> 'vbs',
-			'diff'				=> 'diff',
-			'robots'			=> 'txt',
-			'smarty'			=> 'html',
-
-			'actionscript'		=> 'as',
-			'ada'				=> 'ada',
-			'apache'			=> 'txt',
-			'applescript'		=> 'scrpt',
-			'asm'				=> 'asm',
-			'autoit'			=> 'txt',
-			'bash'				=> 'sh',
-			'blitzbasic'		=> 'bas',
-			'bnf'				=> 'bnf',
-			'c_mac'				=> 'c',
-			'caddcl'			=> 'dcl',
-			'cadlisp'			=> 'lisp',
-			'cfdg'				=> 'cfd',
-			'cfm'				=> 'cfm',
-			'cpp-qt'			=> 'cpp',
-			'css-gen.cfg'		=> 'cfg',
-			'd'					=> 'd',
-			'delphi'			=> 'dpr',
-			'div'				=> 'div',
-			'dos'				=> 'bat',
-			'eiffel'			=> 'E',
-			'fortran'			=> 'F',
-			'freebasic'			=> 'bas',
-			'gml'				=> 'gml',
-			'groovy'			=> 'groovy',
-			'idl'				=> 'idl',
-			'ini'				=> 'ini',
-			'inno'				=> 'ino',
-			'io'				=> 'io',
-			'java5'				=> 'java',
-			'latex'				=> 'tex',
-			'lisp'				=> 'lsp',
-			'lua'				=> 'lua',
-			'matlab'			=> 'm',
-			'mirc'				=> 'mrc',
-			'mpasm'				=> 'asm',
-			'mysql'				=> 'sql',
-			'nsis'				=> 'nsh',
-			'objc'				=> 'C',
-			'ocaml-brief'		=> 'ml',
-			'ocaml'				=> 'ml',
-			'oobas'				=> 'bas',
-			'oracle8'			=> 'sql',
-			'pascal'			=> 'p',
-			'php-brief'			=> 'php',
-			'ruby'				=> 'rb',
-			'sas'				=> 'sas',
-			'scheme'			=> 's',
-			'sdlbasic'			=> 'bas',
-			'smalltalk'			=> 'st',
-			'tcl'				=> 'tcl',
-			'thinbasic'			=> 'bas',
-			'tsql'				=> 'sql',
-			'plsql'				=> 'sql',
-			'python'			=> 'py',
-			'qbasic'			=> 'bas',
-			'rails'				=> 'rb',
-			'reg'				=> 'reg',
-			'vbnet'				=> 'vbs',
-			'vhdl'				=> 'vhdl',
-			'visualfoxpro'		=> 'fky',
-			'winbatch'			=> 'bat',
-			'xpp'				=> 'xpp',
-			'z80'				=> 'z80',
-		);
-
 	}
 
 	/**
@@ -130,15 +47,17 @@ class pastebin implements \ArrayAccess
 	function empty_data()
 	{
 		$this->data = array(
-			'snippet_id' => 0,
-			'snippet_author' => $this->user->data['user_id'],
-			'snippet_time' => time(),
-			'snippet_prune_on' => 0,
-			'snippet_title' => '',
-			'snippet_desc' => '',
-			'snippet_text' => '',
-			'snippet_prunable' => false,
+			'snippet_id' 		=> 0,
+			'snippet_author' 	=> $this->user->data['user_id'],
+			'snippet_time' 		=> time(),
+			'snippet_prune_on' 	=> 0,
+			'snippet_title' 	=> '',
+			'snippet_desc' 		=> '',
+			'snippet_text' 		=> '',
+			'snippet_prunable' 	=> false,
 			'snippet_highlight' => 'text',
+			'snippet_secret'	=> 0,
+			'snippet_hash'		=> '',
 		);
 	}
 
@@ -152,6 +71,8 @@ class pastebin implements \ArrayAccess
 		$sql = 'SELECT * FROM ' . $this->pastebin_table . ' WHERE snippet_id = ' . (int) $id;
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
+		$this->db->sql_freeresult($result);
+
 		if ($row)
 		{
 			$this->data = $row;
@@ -210,29 +131,15 @@ class pastebin implements \ArrayAccess
 		$this->empty_data();
 	}
 
-	/**
-	 * Returns file extension for this entry depending on syntax highlighting.
-	 *
-	 * This will probably not always be correct, but more often than always using "txt".
-	 */
-	function file_ext()
-	{
-		if (isset($this->file_ext[$this->data['snippet_highlight']]))
-		{
-			return $this->file_ext[$this->data['snippet_highlight']];
-		}
-		return 'txt';
-	}
-
 	// ArrayAccess
 	//
 
-	function offsetExists($offset)
+	public function offsetExists(mixed $offset): bool
 	{
 		return isset($this->data[$offset]);
 	}
 
-	function offsetGet($offset)
+	public function offsetGet(mixed $offset): mixed
 	{
 		if (!isset($this->data[$offset]))
 		{
@@ -241,7 +148,7 @@ class pastebin implements \ArrayAccess
 		return $this->data[$offset];
 	}
 
-	function offsetSet($offset, $value)
+	public function offsetSet(mixed $offset, mixed $value): void
 	{
 		if (!isset($this->data[$offset]))
 		{
@@ -251,8 +158,100 @@ class pastebin implements \ArrayAccess
 		$this->data[$offset] = $value;
 	}
 
-	function offsetUnset($offset)
+	public function offsetUnset(mixed $offset): void
 	{
 		// still needed, even if empty
+	}
+
+	/**
+	 * Returns all file extensions from active languages (for uploading)
+	 */
+	public function get_allowed_extensions(): array
+	{
+		$exts = [];
+
+		$sql = 'SELECT lang_file_extension
+		FROM ' . $this->pastebin_langs_table . '
+		WHERE lang_active = 1';
+		$result = $this->db->sql_query($sql);
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			if (!empty($row['lang_file_extension']))
+			{
+				$exts[] = strtolower(ltrim($row['lang_file_extension'], '.'));
+			}
+		}
+		$this->db->sql_freeresult($result);
+
+		return array_values(array_unique($exts)) ?: ['txt'];
+	}
+
+	/**
+	 * Returns all active languages as [lang_name_clean => lang_name]
+	 */
+	public function get_active_languages(): array
+	{
+		if ($this->active_langs === null)
+		{
+			$this->active_langs = [];
+
+			$sql = 'SELECT lang_name, lang_name_clean
+                FROM ' . $this->pastebin_langs_table . '
+                WHERE lang_active = 1
+                ORDER BY lang_name ASC';
+			$result = $this->db->sql_query($sql);
+			while ($row = $this->db->sql_fetchrow($result))
+			{
+				$this->active_langs[$row['lang_name_clean']] = $row['lang_name'];
+			}
+			$this->db->sql_freeresult($result);
+		}
+
+		return $this->active_langs;
+	}
+
+	/**
+	 * Building the option html elements
+	 */
+	public function highlight_select(string $selected): string
+	{
+		$html = '';
+		foreach ($this->get_active_languages() as $clean => $name)
+		{
+			$sel = ($clean === $selected) ? ' selected' : '';
+			$html .= '<option value="' . htmlspecialchars($clean) . '"' . $sel . '>' . htmlspecialchars($name) . '</option>';
+		}
+
+		return $html;
+	}
+
+	/**
+	 * Returns only active languages, if not gives a fallback
+	 */
+	public function validate_language(string $lang): string
+	{
+		$langs = $this->get_active_languages();
+
+		if (isset($langs[$lang]))
+		{
+			return $lang;
+		}
+
+		return isset($langs['php']) ? 'php' : (array_key_first($langs) ?? 'text');
+	}
+
+	/**
+	 * Gets the file extensions from phpbb_pastebin_langs
+	 */
+	public function get_file_extension(string $lang_clean): string
+	{
+		$sql = 'SELECT lang_file_extension
+			FROM ' . $this->pastebin_langs_table . "
+			WHERE lang_name_clean = '" . $this->db->sql_escape($lang_clean) . "'";
+		$result = $this->db->sql_query_limit($sql, 1);
+		$ext = $this->db->sql_fetchfield('lang_file_extension');
+		$this->db->sql_freeresult($result);
+
+		return $ext ? ltrim($ext, '.') : 'txt';
 	}
 }

@@ -18,11 +18,11 @@
 		{% endif %}
 		<dl>
 			<dt><label for="snippet_title">{{ lang('PASTEBIN_SNIPPET_TITLE') }}{{ lang('COLON') }}</label></dt>
-			<dd><input type="text" size="45" maxlength="64" class="autowidth inputbox" name="snippet_title" id="snippet_title" value="{{ SNIPPET_TITLE }}" tabindex="1" /></dd>
+			<dd><input type="text" size="45" maxlength="64" class="autowidth inputbox" name="snippet_title" id="snippet_title" value="{{ SNIPPET_TITLE }}" tabindex="1"></dd>
 		</dl>
 		<dl>
 			<dt><label for="snippet_desc">{{ lang('PASTEBIN_SNIPPET_DESC') }}{{ lang('COLON') }}</label></dt>
-			<dd><input type="text" size="45" maxlength="64" class="autowidth inputbox" name="snippet_desc" id="snippet_desc" value="{{ SNIPPET_DESC }}" tabindex="2" /></dd>
+			<dd><input type="text" size="45" maxlength="64" class="autowidth inputbox" name="snippet_desc" id="snippet_desc" value="{{ SNIPPET_DESC }}" tabindex="2"></dd>
 		</dl>
 		<dl>
 			<dt><label for="snippet_highlight">{{ lang('PASTEBIN_SNIPPET_HIGHLIGHT') }}{{ lang('COLON') }}</label></dt>
@@ -33,6 +33,11 @@
 			<dt><label for="pruning_months">{{ lang('PASTEBIN_PRUNING_MONTHS') }}{{ lang('COLON') }}</label></dt>
 			<dd><select name="pruning_months" id="pruning_months">{{ PRUNING_MONTHS_SELECT }}</select> {{ lang('PASTEBIN_PRUNING_MONTH_SHORT') }}</dd>
 		</dl>
+
+		<dl>
+			<dt><label for="snippet_secret">{{ lang('PASTEBIN_SNIPPET_SECRET') }}{{ lang('COLON') }}</label></dt>
+			<dd><label for="snippet_secret"><input type="checkbox" name="snippet_secret" id="snippet_secret" value="1"{% if SNIPPET_SECRET %} checked{% endif %}> {{ lang('PASTEBIN_SNIPPET_SECRET_SHORT') }}</label></dd>
+		</dl>
 		
 		</fieldset>
 
@@ -42,7 +47,7 @@
 		<dl>
 			<dt><label for="fileupload">{{ lang('FILENAME') }}{{ lang('COLON') }}</label></dt>
 			<dd>
-				<input type="file" name="fileupload" id="fileupload" maxlength="{{ FILESIZE }}" value="" class="inputbox autowidth" />
+				<input type="file" name="fileupload" id="fileupload" maxlength="{{ FILESIZE }}" value="" class="inputbox autowidth">
 			</dd>
 		</dl>
 
@@ -70,8 +75,8 @@
 		<fieldset class="submit-buttons">
 			{{ S_HIDDEN_FIELDS }}
 			{{ S_FORM_TOKEN }}
-			<input class="button2" type="reset" value="{{ lang('RESET') }}" accesskey="r" />&nbsp;
-			<input class="button1" name="submit" type="submit" value="{{ lang('SUBMIT') }}" accesskey="s" tabindex="5" />&nbsp;
+			<input class="button2" type="reset" value="{{ lang('RESET') }}" accesskey="r">&nbsp;
+			<input class="button1" name="submit" type="submit" value="{{ lang('SUBMIT') }}" accesskey="s" tabindex="5">&nbsp;
 		</fieldset>
 		
 	</div>

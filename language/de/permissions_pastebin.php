@@ -37,7 +37,7 @@ $lang = array_merge($lang, array(
 	// Category
 	'ACL_CAT_PASTEBIN' => 'Pastebin',
 
-	// User perms
+	// User permissions
 	'ACL_U_PASTEBIN_VIEW'			=> 'Kann Snippets sehen',
 	'ACL_U_PASTEBIN_POST'			=> 'Kann Snippets posten',
 	'ACL_U_PASTEBIN_POST_NOVC'		=> 'Kann Snippets posten ohne visuelle Bestätigung',
@@ -45,8 +45,11 @@ $lang = array_merge($lang, array(
 	'ACL_U_PASTEBIN_EDIT'			=> 'Kann eigene Snippets bearbeiten (Speicherdauer, Syntaxhervorhebung, Quellcode)',
 	'ACL_U_PASTEBIN_DELETE'			=> 'Kann eigene Snippets löschen',
 
-	// Moderator perms,
+	// Moderator permissions
 	'ACL_M_PASTEBIN_EDIT'			=> 'Kann Snippets editieren (Speicherdauer, Syntaxhervorhebung, Quellcode)',
 	'ACL_M_PASTEBIN_DELETE'			=> 'Kann Snippets löschen',
 	'ACL_M_PASTEBIN_POST_NOTLIM'	=> 'Kann die automatische Löschung von Snippets deaktivieren',
+
+	// Admin permissions
+	'ACL_A_PASTEBIN'				=> 'Kann Pastebin verwalten',
 ));

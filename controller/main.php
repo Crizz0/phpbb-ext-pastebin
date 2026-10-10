@@ -2,8 +2,8 @@
 
 /**
  *
- * @package phpBB.de pastebin
- * @copyright (c) 2015 phpBB.de, gn#36
+ * @package phpBB.de - Pastebin
+ * @copyright (c) 2026 phpBB.de, gn#36, Crizzo
  * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  *
  */
@@ -157,8 +157,8 @@ class main
 			'S_MODE'		=> $mode,
 			'S_FORM_ACTION'	=> $this->helper->route('phpbbde_pastebin_main_controller'),
 
-			'S_AUTH_VIEW'	=> (bool)$this->auth->acl_get('u_pastebin_view'),
-			'S_AUTH_POST'	=> (bool)$this->auth->acl_get('u_pastebin_post'),
+			'S_AUTH_VIEW'	=> (bool) $this->auth->acl_get('u_pastebin_view'),
+			'S_AUTH_POST'	=> (bool) $this->auth->acl_get('u_pastebin_post'),
 		));
 
 		// Now let's decide what to do
@@ -526,15 +526,15 @@ class main
 		{
 			if (isset($data['snippet_prune_on']) && isset($data['snippet_time']))
 			{
-				$selected = ($data['snippet_prune_on'] - $data['snippet_time'] == $i * $this::SECONDS_MONTH) ? ' selected="selected"' : '';
+				$selected = ($data['snippet_prune_on'] - $data['snippet_time'] == $i * $this::SECONDS_MONTH) ? ' selected' : '';
 			}
 			else if ($prune_month)
 			{
-				$selected = ($i == $prune_month) ? ' selected="selected"' : '';
+				$selected = ($i == $prune_month) ? ' selected' : '';
 			}
 			else
 			{
-				$selected = ($i == 1) ? ' selected="selected"' : '';
+				$selected = ($i == 1) ? ' selected' : '';
 			}
 			$pruning_months_select .= '<option' . $selected . ' value="' . $i . '">' . $i . '</option>';
 		}
@@ -545,7 +545,7 @@ class main
 		{
 			if (isset($data['snippet_prunable']))
 			{
-				$selected = ($data['snippet_prunable'] == 0 || $prune_month == -1) ? ' selected="selected"' : '';
+				$selected = ($data['snippet_prunable'] == 0 || $prune_month == -1) ? ' selected' : '';
 			}
 			else
 			{

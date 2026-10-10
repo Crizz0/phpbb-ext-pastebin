@@ -105,7 +105,8 @@ class v300 extends \phpbb\db\migration\migration
 			['YAML', 'yaml', '1', 'yml, yaml'],
 		];
 
-		foreach ($data as $langs) {
+		foreach ($data as $langs)
+		{
 			$sql_ary[] = [
 				'lang_name' => $langs[0],
 				'lang_name_clean' => $langs[1],

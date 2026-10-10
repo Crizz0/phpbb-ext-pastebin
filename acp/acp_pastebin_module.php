@@ -18,7 +18,8 @@ class acp_pastebin_module
 
 		$language = $phpbb_container->get('language');
 
-		switch ($mode) {
+		switch ($mode)
+		{
 			// Settings
 			case 'settings':
 				$this->tpl_name = 'acp_pastebin_settings';

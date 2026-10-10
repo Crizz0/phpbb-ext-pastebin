@@ -218,7 +218,7 @@ class pastebin implements \ArrayAccess
 		$html = '';
 		foreach ($this->get_active_languages() as $clean => $name)
 		{
-			$sel = ($clean === $selected) ? ' selected="selected"' : '';
+			$sel = ($clean === $selected) ? ' selected' : '';
 			$html .= '<option value="' . htmlspecialchars($clean) . '"' . $sel . '>' . htmlspecialchars($name) . '</option>';
 		}
 

@@ -2,6 +2,10 @@
 
 /**
  *
+ * @package phpBB.de - Pastebin
+ * @copyright (c) 2026 phpBB.de, Crizzo
+ * @license https://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+ *
  */
 
 namespace phpbbde\pastebin\controller;
@@ -11,12 +15,12 @@ class acp_pastebin_settings
 	protected string $u_action;
 
 	public function __construct(
-		protected \phpbb\auth\auth                  $auth,
-		protected \phpbb\config\config              $config,
+		protected \phpbb\auth\auth $auth,
+		protected \phpbb\config\config $config,
 		protected \phpbb\db\driver\driver_interface $db,
-		protected \phpbb\language\language          $language,
-		protected \phpbb\request\request_interface  $request,
-		protected \phpbb\template\template          $template,
+		protected \phpbb\language\language $language,
+		protected \phpbb\request\request_interface $request,
+		protected \phpbb\template\template $template,
 	)
 	{
 
@@ -29,12 +33,15 @@ class acp_pastebin_settings
 		add_form_key($form_name);
 		$error = '';
 
-		if ($this->request->is_set_post('submit')) {
-			if (!check_form_key($form_name)) {
+		if ($this->request->is_set_post('submit'))
+		{
+			if (!check_form_key($form_name))
+			{
 				$error = $this->language->lang('FORM_INVALID');
 			}
 
-			if (empty($error) && $this->request->is_set_post('submit')) {
+			if (empty($error) && $this->request->is_set_post('submit'))
+			{
 				$this->config->set('pastebin_allow_secret_snippets', $this->request->variable('pastebin_allow_secret_snippets', false));
 				$this->config->set('pastebin_default_prune_months', $this->request->variable('pastebin_default_prune_months', 0));
 

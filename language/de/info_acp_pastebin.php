@@ -1,19 +1,21 @@
 <?php
 
-	/**
-	 *
-	 */
+/**
+ *
+ */
 
-	/**
-	 * DO NOT CHANGE
-	 */
-	if (!defined('IN_PHPBB')) {
-		exit;
-	}
+/**
+ * DO NOT CHANGE
+ */
+if (!defined('IN_PHPBB'))
+{
+	exit;
+}
 
-	if (empty($lang) || !is_array($lang)) {
-		$lang = [];
-	}
+if (empty($lang) || !is_array($lang))
+{
+	$lang = [];
+}
 
 // DEVELOPERS PLEASE NOTE
 //
@@ -31,7 +33,7 @@
 // ’ « » “ ” … „ “
 
 	$lang = array_merge($lang, [
-// ACP
+	// ACP
 	'PASTEBIN_NAV_TITLE' 	=> 'Pastebin',
 	'PASTEBIN_NAV_CONFIG' 	=> 'Pastebin - Einstellungen',
 	'PASTEBIN_NAV_LANGS' 	=> 'Pastebin - Sprachen',

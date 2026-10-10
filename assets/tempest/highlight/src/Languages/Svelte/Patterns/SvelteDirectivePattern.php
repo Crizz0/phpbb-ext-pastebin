@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Tempest\Highlight\Languages\TypeScript\Patterns;
+namespace Tempest\Highlight\Languages\Svelte\Patterns;
 
 use Tempest\Highlight\IsPattern;
 use Tempest\Highlight\Pattern;
 use Tempest\Highlight\Tokens\TokenTypeEnum;
 
-final class TsGenericPattern implements Pattern
+final readonly class SvelteDirectivePattern implements Pattern
 {
     use IsPattern;
 
     public function getPattern(): string
     {
-        return '/(?<=\w)(?<match><[A-Z\'"][\w\s,\.\[\]\'"|]*>)/';
+        return '(?<=\s)(?<match>(?:bind|use|transition|in|out|animate|on|class|style)):';
     }
 
     public function getTokenType(): TokenTypeEnum
     {
-        return TokenTypeEnum::GENERIC;
+        return TokenTypeEnum::PROPERTY;
     }
 }

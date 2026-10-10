@@ -15,9 +15,10 @@ use Tempest\Highlight\Languages\Diff\DiffLanguage;
 use Tempest\Highlight\Languages\DocComment\DocCommentLanguage;
 use Tempest\Highlight\Languages\Dockerfile\DockerfileLanguage;
 use Tempest\Highlight\Languages\DotEnv\DotEnvLanguage;
-use Tempest\Highlight\Languages\Ellison\EllisonLanguage;
 use Tempest\Highlight\Languages\Gdscript\GdscriptLanguage;
+use Tempest\Highlight\Languages\Graphql\GraphqlLanguage;
 use Tempest\Highlight\Languages\Html\HtmlLanguage;
+use Tempest\Highlight\Languages\Http\HttpLanguage;
 use Tempest\Highlight\Languages\Ini\IniLanguage;
 use Tempest\Highlight\Languages\JavaScript\JavaScriptLanguage;
 use Tempest\Highlight\Languages\Json\JsonLanguage;
@@ -27,11 +28,13 @@ use Tempest\Highlight\Languages\Php\PhpLanguage;
 use Tempest\Highlight\Languages\Python\PythonLanguage;
 use Tempest\Highlight\Languages\Scss\ScssLanguage;
 use Tempest\Highlight\Languages\Sql\SqlLanguage;
+use Tempest\Highlight\Languages\Svelte\SvelteLanguage;
 use Tempest\Highlight\Languages\Terminal\TerminalLanguage;
 use Tempest\Highlight\Languages\Terraform\TerraformLanguage;
 use Tempest\Highlight\Languages\Text\TextLanguage;
 use Tempest\Highlight\Languages\Twig\TwigLanguage;
 use Tempest\Highlight\Languages\TypeScript\TypeScriptLanguage;
+use Tempest\Highlight\Languages\Vue\VueLanguage;
 use Tempest\Highlight\Languages\Xml\XmlLanguage;
 use Tempest\Highlight\Languages\Yaml\YamlLanguage;
 use Tempest\Highlight\Themes\CssTheme;
@@ -48,7 +51,6 @@ final class Highlighter
     private readonly ParseTokens $parseTokens;
     private readonly GroupTokens $groupTokens;
     private readonly RenderTokens $renderTokens;
-    private readonly TextLanguage $fallbackLanguage;
     private array $patterns = [];
     private array $afterInjections = [];
     /** @var array<int, Injection[]> */
@@ -57,8 +59,10 @@ final class Highlighter
     private array $afterInjectionsCache = [];
     private ?self $nestedHighlighter = null;
 
-    public function __construct(private readonly Theme $theme = new CssTheme())
-    {
+    public function __construct(
+        public readonly Theme $theme = new CssTheme(),
+        public readonly Language|null $fallbackLanguage = new TextLanguage(),
+    ) {
         $this->addLanguage(new ApacheLanguage())
             ->addLanguage(new BashLanguage())
             ->addLanguage(new BBCodeLanguage())
@@ -67,9 +71,10 @@ final class Highlighter
             ->addLanguage(new DiffLanguage())
             ->addLanguage(new DocCommentLanguage())
             ->addLanguage(new DockerfileLanguage())
-            ->addLanguage(new EllisonLanguage())
             ->addLanguage(new GdscriptLanguage())
+            ->addLanguage(new GraphqlLanguage())
             ->addLanguage(new HtmlLanguage())
+            ->addLanguage(new HttpLanguage())
             ->addLanguage(new JavaScriptLanguage())
             ->addLanguage(new JsonLanguage())
             ->addLanguage(new MarkdownLanguage())
@@ -79,15 +84,17 @@ final class Highlighter
             ->addLanguage(new ScssLanguage())
             ->addLanguage(new SqlLanguage())
             ->addLanguage(new TerminalLanguage())
+            ->addLanguage(new TextLanguage())
             ->addLanguage(new TerraformLanguage())
             ->addLanguage(new TypeScriptLanguage())
             ->addLanguage(new XmlLanguage())
             ->addLanguage(new YamlLanguage())
             ->addLanguage(new DotEnvLanguage())
             ->addLanguage(new IniLanguage())
-            ->addLanguage(new TwigLanguage());
+            ->addLanguage(new TwigLanguage())
+            ->addLanguage(new SvelteLanguage())
+            ->addLanguage(new VueLanguage());
 
-        $this->fallbackLanguage = new TextLanguage();
         $this->parseTokens = new ParseTokens();
         $this->groupTokens = new GroupTokens();
         $this->renderTokens = new RenderTokens($this->theme);
@@ -121,11 +128,17 @@ final class Highlighter
         return $this;
     }
 
-    public function parse(string $content, string|Language $language): string
+    public function parse(string $content, null|string|Language $language): string
     {
-        if (is_string($language)) {
-            $language = $this->languages[$language] ?? $this->fallbackLanguage;
+        if (! $this->isNested) {
+            $content = str_replace(Escape::TOKEN_KEYS, '', $content);
         }
+
+        if (is_string($language)) {
+            $language = $this->languages[$language] ?? null;
+        }
+
+        $language ??= $this->fallbackLanguage;
 
         $this->currentLanguage = $language;
 

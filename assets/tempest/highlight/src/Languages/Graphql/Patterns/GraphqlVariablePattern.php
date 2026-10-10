@@ -2,23 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Tempest\Highlight\Languages\TypeScript\Patterns;
+namespace Tempest\Highlight\Languages\Graphql\Patterns;
 
 use Tempest\Highlight\IsPattern;
 use Tempest\Highlight\Pattern;
+use Tempest\Highlight\PatternTest;
 use Tempest\Highlight\Tokens\TokenTypeEnum;
 
-final class TsGenericPattern implements Pattern
+#[PatternTest(input: 'test: $test', output: '$test')]
+final class GraphqlVariablePattern implements Pattern
 {
     use IsPattern;
 
     public function getPattern(): string
     {
-        return '/(?<=\w)(?<match><[A-Z\'"][\w\s,\.\[\]\'"|]*>)/';
+        return '(?<match>\$[\w]+)';
     }
 
     public function getTokenType(): TokenTypeEnum
     {
-        return TokenTypeEnum::GENERIC;
+        return TokenTypeEnum::VARIABLE;
     }
 }

@@ -41,15 +41,17 @@ class pastebin implements \ArrayAccess
 	function empty_data()
 	{
 		$this->data = array(
-			'snippet_id' => 0,
-			'snippet_author' => $this->user->data['user_id'],
-			'snippet_time' => time(),
-			'snippet_prune_on' => 0,
-			'snippet_title' => '',
-			'snippet_desc' => '',
-			'snippet_text' => '',
-			'snippet_prunable' => false,
+			'snippet_id' 		=> 0,
+			'snippet_author' 	=> $this->user->data['user_id'],
+			'snippet_time' 		=> time(),
+			'snippet_prune_on' 	=> 0,
+			'snippet_title' 	=> '',
+			'snippet_desc' 		=> '',
+			'snippet_text' 		=> '',
+			'snippet_prunable' 	=> false,
 			'snippet_highlight' => 'text',
+			'snippet_secret'	=> 0,
+			'snippet_hash'		=> '',
 		);
 	}
 

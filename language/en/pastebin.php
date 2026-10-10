@@ -44,6 +44,7 @@ $lang = array_merge($lang, array(
 	'PASTEBIN_ERR_NO_BODY'				=> 'You did not enter any code or a valid file for upload.',
 	'PASTEBIN_ERR_NO_TITLE'				=> 'You did not enter a title for your entry.',
 	'PASTEBIN_ERR_NO_DESC'				=> 'You did not enter a description for your entry.',
+	'PASTEBIN_ERR_WRONG_SECRET'			=> 'Invalid value for secret snippet.',
 	'PASTEBIN_FORM_INVALID'				=> 'Invalid form.',
 
 	'PASTEBIN_HIGHLIGHT_LANG'			=> 'Syntax highlighting',

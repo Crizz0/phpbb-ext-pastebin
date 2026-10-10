@@ -177,8 +177,8 @@ class main
 				else
 				{
 					$data = [
-						'snippet_hash'	=> $snippet_hash,
-						'snippet_text'	=> $this->request->raw_variable('edit_snippet', ''),
+						'snippet_hash'		=> $snippet_hash,
+						'snippet_text'		=> $this->request->raw_variable('edit_snippet', ''),
 					];
 
 					$snippet->load_from_array($data);
@@ -216,6 +216,7 @@ class main
 						'snippet_prunable'	=> 1,
 						'snippet_highlight' => $this->validate_language($this->request->variable('snippet_highlight', '')),
 						'snippet_prune_on'	=> max(1, min(6, $this->request->variable('pruning_months', 0))),
+						'snippet_secret'	=> $this->request->variable('snippet_secret', 0),
 				);
 
 				if ($this->auth->acl_get('u_pastebin_post_notlim') && $this->request->variable('pruning_months',0) == -1)
@@ -229,6 +230,11 @@ class main
 				if (empty($data['snippet_title']))
 				{
 					$error[] = $this->language->lang('PASTEBIN_ERR_NO_TITLE');
+				}
+
+				if (!in_array($data['snippet_secret'], [0, 1]))
+				{
+					$error[] = $this->language->lang('PASTEBIN_ERR_WRONG_SECRET');
 				}
 
 				$filedata = $this->request->file('fileupload');
@@ -313,6 +319,7 @@ class main
 							'snippet_time'		=> time(),
 							'snippet_title'		=> $data['snippet_title'],
 							'snippet_desc'		=> $data['snippet_desc'],
+							'snippet_secret'	=> (int) $data['snippet_secret'],
 							'snippet_text'		=> $snippet_contents,
 							'snippet_prunable'	=> (int) $data['snippet_prunable'],
 							'snippet_highlight'	=> $data['snippet_highlight'],
@@ -379,6 +386,7 @@ class main
 						'SNIPPET_AUTHOR_COLOUR'	=> $data['user_colour'],
 						'SNIPPET_AUTHOR_FULL'	=> get_username_string('full', $data['user_id'], $data['username'], $data['user_colour']),
 						'SNIPPET_DATE'			=> $this->user->format_date($data['snippet_time']),
+						'SNIPPET_SECRET'		=> $data['snippet_secret'],
 
 						'HIGHLIGHT_SELECT_MOD' => $this->highlight_select((string) $data['snippet_highlight']),
 						'DOWNLOAD_SNIPPET_EXPLAIN'	=> $this->language->lang('PASTEBIN_DOWNLOAD_SNIPPET_EXPLAIN', '<a href="' . $snippet_download_url . '">', '</a>'),
@@ -434,10 +442,11 @@ class main
 				}
 				else if ($mode == 'moderate')
 				{
-					$delete			= $this->request->is_set_post('delete_snippet');
+					$delete				= $this->request->is_set_post('delete_snippet');
 					$highlight = $this->validate_language($this->request->variable('snippet_highlight', ''));
 					$pruning_months	= $this->request->variable('pruning_months', 0);
 					$prunable		= $pruning_months != -1;
+					$secret			= $this->request->variable('snippet_secret', 0);
 
 					$auth_edit = ($this->auth->acl_get('m_pastebin_edit') || ($this->auth->acl_get('u_pastebin_edit') && $this->user->data['user_id'] == $snippet['snippet_author']));
 					$auth_delete =  ($this->auth->acl_get('m_pastebin_delete') || ($this->auth->acl_get('u_pastebin_delete') && $this->user->data['user_id'] == $snippet['snippet_author']));
@@ -473,6 +482,7 @@ class main
 							'snippet_prunable'	=> (int) $prunable,
 							'snippet_highlight'	=> $highlight,
 							'snippet_prune_on'	=> $data['snippet_time'] + ($pruning_months * $this::SECONDS_MONTH),
+							'snippet_secret'	=> $secret,
 						));
 						$snippet->submit();
 
@@ -568,6 +578,7 @@ class main
 
 				'HIGHLIGHT_SELECT'	=> $highlight_select,
 				'PRUNING_MONTHS_SELECT'	=> $pruning_months_select,
+				'SNIPPET_SECRET'		=> $data['snippet_secret'] ?? '',
 
 				'FILESIZE'			=> $this->config['max_filesize'],
 

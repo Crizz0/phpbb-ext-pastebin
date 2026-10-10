@@ -36,9 +36,10 @@ if (empty($lang) || !is_array($lang))
 	// ACP
 	'ACP_PASTEBIN_TITLE'	=>'Pastebin',
 
-	'PASTEBIN_NAV_TITLE' 	=> 'Pastebin',
-	'PASTEBIN_NAV_CONFIG' 	=> 'Pastebin - Einstellungen',
-	'PASTEBIN_NAV_LANGS' 	=> 'Pastebin - Sprachen',
+	'PASTEBIN_NAV_TITLE' 		=> 'Pastebin',
+	'PASTEBIN_NAV_CONFIG' 		=> 'Pastebin - Einstellungen',
+	'PASTEBIN_NAV_LANGS' 		=> 'Pastebin - Sprachen',
+	'PASTEBIN_NAV_LANGUAGES' 	=> 'Pastebin - Sprachen',
 
 	'PASTEBIN_CONFIG' 			=> 'Pastebin Einstellungen',
 	'PASTEBIN_CONFIG_EXPLAIN' 	=> 'Hier können Einstellungen für die Extension <em>Pastebin</em> vorgenommen werden. Eingestellt werden kann, ob geheime Snippets erstellt werden können und was der Standardwert für die Speicherdauer der Snippets ist.',
@@ -56,6 +57,9 @@ if (empty($lang) || !is_array($lang))
 
 	'PASTEBIN_SETTINGS' 	=> 'Pastebin-Einstellungen',
 	'PASTEBIN_UPDATED' 		=> 'Die Einstellungen der Pastebin wurden aktualisiert.',
+
+	'PASTEBIN_LANG_CONFIG'			=> 'Pastebin - Language Configuration',
+	'PASTEBIN_LANG_CONFIG_EXPLAIN'	=> 'Alle Eigenschaften einsehen und Sprachen aktivieren und deaktivieren.',
 
 	// Lang-Keys for the Pastebin-Lang-ACP-page
 	'PASTEBIN_LANG_SETTINGS'			=> 'Pastebin - Spracheinstellungen',

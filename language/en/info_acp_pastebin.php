@@ -36,9 +36,10 @@ $lang = array_merge($lang, [
 	// ACP
 	'ACP_PASTEBIN_TITLE'	=>'Pastebin',
 
-	'PASTEBIN_NAV_TITLE' 	=> 'Pastebin',
-	'PASTEBIN_NAV_CONFIG' 	=> 'Pastebin - Settings',
-	'PASTEBIN_NAV_LANGS' 	=> 'Pastebin - Languages',
+	'PASTEBIN_NAV_TITLE' 		=> 'Pastebin',
+	'PASTEBIN_NAV_CONFIG' 		=> 'Pastebin - Settings',
+	'PASTEBIN_NAV_LANGS' 		=> 'Pastebin - Languages',
+	'PASTEBIN_NAV_LANGUAGES' 	=> 'Pastebin - Languages',
 
 	'PASTEBIN_CONFIG' 			=> 'Pastebin - Settings',
 	'PASTEBIN_CONFIG_EXPLAIN' 	=> 'On this page the settings for the <em>Pastebin</em> extensions can be done. 
@@ -56,6 +57,9 @@ $lang = array_merge($lang, [
 
 	'PASTEBIN_SETTINGS' 	=> 'Pastebin settings',
 	'PASTEBIN_UPDATED' 		=> 'The Pastebin settings have been updated.',
+
+	'PASTEBIN_LANG_CONFIG'			=> 'Pastebin - Language Configuration',
+	'PASTEBIN_LANG_CONFIG_EXPLAIN'	=> 'See all lanuage properties and activate and deactivate languages.',
 
 	// Lang-Keys for the Pastebin-Lang-ACP-page
 	'PASTEBIN_LANG_SETTINGS'			=> 'Pastebin - Languages settings',

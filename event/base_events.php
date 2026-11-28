@@ -85,6 +85,8 @@ class base_events implements EventSubscriberInterface
 
 	public function viewonline_page($event)
 	{
+		$this->language->add_lang('global', 'phpbbde/pastebin');
+
 		if ($event['on_page'][1] == 'app')
 		{
 			if (strrpos($event['row']['session_page'], 'app.' . $this->php_ext . '/pastebin') === 0)
